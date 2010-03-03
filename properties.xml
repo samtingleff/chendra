@@ -4,7 +4,19 @@
 
 <property file="build.properties"/>
 
+<property name="lib.path" value="lib" />
+<property name="build.path" value="bin" />
+<property name="jar.filename" value="chendra-${version}.jar" />
+<property name="debug" value="on" />
+<property name="src.main.path" value="src/java/main" />
+<property name="src.test.path" value="src/java/test" />
+
 <!-- Load user overrides -->
 <property file="build.properties"/>
 <property file="${user.home}/.build.properties"/>
 <property file="${user.home}/.${ant.project.name}-build.properties"/>
+
+<path id="compile.classpath">
+	<fileset dir="${lib.path}" includes="*.jar"/>
+	<fileset dir="${hadoop.home}" includes="${hadoop.core.jar}"/>
+</path>

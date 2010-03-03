@@ -8,14 +8,8 @@
 
 	<target name="init">
 		<!-- project settings go here -->
-		<property name="jar.filename" value="chendra-${version}.jar" />
 
 		<property file="build.properties" />
-		<property name="debug" value="on" />
-		<property name="lib.path" value="lib" />
-		<property name="src.main.path" value="src/java/main" />
-		<property name="src.test.path" value="src/java/test" />
-		<property name="build.path" value="bin" />
 	</target>
 
 	<!--cleanup -->
@@ -33,11 +27,11 @@
 
 	<!--compile the source code into destdir-->
 	<target name="compile" depends="dirCreate">
-		<javac destdir="${build.path}" target="1.5" debug="${debug}">
-			<classpath path="${lib.path}/ant.jar" />
-			<classpath path="${lib.path}/junit-4.0.jar" />
-			<classpath path="${lib.path}/velocity-1.6.3.jar" />
-			<classpath path="${hadoop.home}/${hadoop.core.jar}" />
+		<copy todir="${build.path}" overwrite="true">
+			<fileset dir="${src.main.path}" includes="**/*.properties,**/*.xml,**/*.vm"/>
+		</copy>
+		<javac destdir="${build.path}" target="1.5" debug="${debug}" 
+			classpathref="compile.classpath">
 			<src path="${src.main.path}/" />
 			<src path="${src.test.path}/" />
 			<include name="**/*.java" />
