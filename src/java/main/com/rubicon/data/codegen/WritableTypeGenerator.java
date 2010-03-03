@@ -53,14 +53,18 @@ public class WritableTypeGenerator {
 
 	private VelocityEngine ve = new VelocityEngine();
 
-	public WritableTypeGenerator() throws Exception {
+	public WritableTypeGenerator() {
 		Properties p = new Properties();
 		p.setProperty("resource.loader", "classpath");
 		p
 				.setProperty("classpath.resource.loader.class",
 						"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		p.setProperty("classpath.resource.loader.cache", "true");
-		ve.init(p);
+		try {
+			ve.init(p);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void generateWritable(DataFormat df, String srcDir) throws Exception {
