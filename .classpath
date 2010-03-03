@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/java/main"/>
+	<classpathentry kind="src" path="src/java/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="HADOOP_HOME/hadoop-0.20.0-core.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.0.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-1.6.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
