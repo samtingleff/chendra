@@ -147,6 +147,5 @@ public class WritableTypeGenerator {
 		generator.generateWritable(new IntArrayDataFormat(), "gen");
 		generator.generateWritable(new LongArrayDataFormat(), "gen");
 		generator.generateWritable(new StringArrayDataFormat(), "gen");
-		//generator.generateWritable(new WebHitFormat(), "gen");
 	}
 }
