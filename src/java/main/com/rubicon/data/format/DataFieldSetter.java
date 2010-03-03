@@ -12,6 +12,8 @@ import com.rubicon.data.types.DataType;
 public @interface DataFieldSetter {
 	public String name();
 
+	public int version();
+
 	public Class<? extends DataType> type();
 
 }

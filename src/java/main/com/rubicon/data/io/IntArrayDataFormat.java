@@ -7,6 +7,9 @@ import com.rubicon.data.types.IntArrayType;
 import com.rubicon.data.util.ListUtils;
 
 public class IntArrayDataFormat implements DataFormat {
+
+	private static final int VERSION = 1;
+
 	private static String separator = ",";
 
 	private int[] values;
@@ -19,14 +22,18 @@ public class IntArrayDataFormat implements DataFormat {
 		this.values = values;
 	}
 
-	@DataFieldGetter(name = "values", type = IntArrayType.class)
+	@DataFieldGetter(name = "values", version = 1, type = IntArrayType.class)
 	public int[] getValues() {
 		return values;
 	}
 
-	@DataFieldSetter(name = "values", type = IntArrayType.class)
+	@DataFieldSetter(name = "values", version = 1, type = IntArrayType.class)
 	public void setValues(int[] values) {
 		this.values = values;
+	}
+
+	public int version() {
+		return VERSION;
 	}
 
 	public String toString() {

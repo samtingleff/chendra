@@ -9,6 +9,9 @@ import com.rubicon.data.types.StringArrayType;
 import com.rubicon.data.util.ListUtils;
 
 public class StringArrayDataFormat implements DataFormat {
+
+	private static final int VERSION = 1;
+
 	private static String separator = ",";
 
 	private String[] values;
@@ -21,14 +24,18 @@ public class StringArrayDataFormat implements DataFormat {
 		this.values = values;
 	}
 
-	@DataFieldGetter(name = "values", type = StringArrayType.class)
+	@DataFieldGetter(name = "values", version = 1, type = StringArrayType.class)
 	public String[] getValues() {
 		return values;
 	}
 
-	@DataFieldSetter(name = "values", type = StringArrayType.class)
+	@DataFieldSetter(name = "values", version = 1, type = StringArrayType.class)
 	public void setValues(String[] values) {
 		this.values = values;
+	}
+
+	public int version() {
+		return VERSION;
 	}
 
 	public String toString() {

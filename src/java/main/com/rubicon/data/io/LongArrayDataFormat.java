@@ -7,6 +7,9 @@ import com.rubicon.data.types.LongArrayType;
 import com.rubicon.data.util.ListUtils;
 
 public class LongArrayDataFormat implements DataFormat {
+
+	private static final int VERSION = 1;
+
 	private static String separator = ",";
 
 	private long[] values;
@@ -19,14 +22,18 @@ public class LongArrayDataFormat implements DataFormat {
 		this.values = values;
 	}
 
-	@DataFieldGetter(name = "values", type = LongArrayType.class)
+	@DataFieldGetter(name = "values", version = 1, type = LongArrayType.class)
 	public long[] getValues() {
 		return values;
 	}
 
-	@DataFieldSetter(name = "values", type = LongArrayType.class)
+	@DataFieldSetter(name = "values", version = 1, type = LongArrayType.class)
 	public void setValues(long[] values) {
 		this.values = values;
+	}
+
+	public int version() {
+		return VERSION;
 	}
 
 	public String toString() {
