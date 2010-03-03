@@ -1,0 +1,57 @@
+<!DOCTYPE project [
+	<!ENTITY properties SYSTEM "./properties.xml">
+]>
+
+<project name="chendra" default="all" basedir=".">
+	<!-- import project-wide properties (classpath, jar file locations) -->
+	&properties;
+
+	<target name="init">
+		<!-- project settings go here -->
+		<property name="jar.filename" value="chendra-${version}.jar" />
+
+		<property file="build.properties" />
+		<property name="debug" value="on" />
+		<property name="lib.path" value="lib" />
+		<property name="src.main.path" value="src/java/main" />
+		<property name="src.test.path" value="src/java/test" />
+		<property name="build.path" value="bin" />
+	</target>
+
+	<!--cleanup -->
+	<target name="clean" depends="init">
+		<delete>
+			<fileset dir="${build.path}" includes="**/*.jar" />
+		</delete>
+	</target>
+
+	<!--create directory structure -->
+	<target name="dirCreate" depends="clean">
+		<delete dir="${build.path}" />
+		<mkdir dir="${build.path}" />
+	</target>
+
+	<!--compile the source code into destdir-->
+	<target name="compile" depends="dirCreate">
+		<javac destdir="${build.path}" target="1.5" debug="${debug}">
+			<classpath path="${lib.path}/ant.jar" />
+			<classpath path="${lib.path}/junit-4.0.jar" />
+			<classpath path="${lib.path}/velocity-1.6.3.jar" />
+			<classpath path="${hadoop.home}/${hadoop.core.jar}" />
+			<src path="${src.main.path}/" />
+			<src path="${src.test.path}/" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+	<!--create the jar file-->
+	<target name="createJar" depends="compile">
+		<jar destfile="${jar.filename}" basedir="${build.path}"  />
+	</target>
+
+	<!--run ant-->
+	<target name="all" depends="init">
+		<antcall target="createJar" />
+	</target>
+
+</project>

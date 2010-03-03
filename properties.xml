@@ -1,0 +1,10 @@
+<!-- Define properties used in build.xml -->
+
+<!-- General configuration -->
+
+<property file="build.properties"/>
+
+<!-- Load user overrides -->
+<property file="build.properties"/>
+<property file="${user.home}/.build.properties"/>
+<property file="${user.home}/.${ant.project.name}-build.properties"/>
