@@ -38,6 +38,10 @@ public class StringArrayDataFormat implements DataFormat {
 		return VERSION;
 	}
 
+	public String join(String separator) {
+		return ListUtils.join(separator, (Serializable[]) values);
+	}
+
 	public String toString() {
 		return ListUtils.join(separator, (Serializable[]) values);
 	}

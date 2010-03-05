@@ -36,6 +36,10 @@ public class LongArrayDataFormat implements DataFormat {
 		return VERSION;
 	}
 
+	public String join(String separator) {
+		return ListUtils.join(separator, values);
+	}
+
 	public String toString() {
 		return ListUtils.join(separator, values);
 	}
