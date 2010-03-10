@@ -5,7 +5,8 @@ import java.util.Collection;
 
 public class ListUtils {
 
-	public static String join(Collection<? extends Serializable> coll, String separator) {
+	public static String join(Collection<? extends Serializable> coll,
+			String separator) {
 		StringBuffer sb = new StringBuffer();
 		int index = 0;
 		for (Serializable s : coll) {
