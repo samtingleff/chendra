@@ -8,6 +8,7 @@
 <property name="build.path" value="bin" />
 <property name="jar.filename" value="chendra-${version}.jar" />
 <property name="debug" value="on" />
+<property name="src.main.gen.path" value="gen/java/main" />
 <property name="src.main.path" value="src/java/main" />
 <property name="src.test.gen.path" value="gen/java/test" />
 <property name="src.test.path" value="src/java/test" />

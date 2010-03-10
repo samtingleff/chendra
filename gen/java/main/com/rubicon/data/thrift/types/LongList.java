@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  */
-package com.rubicon.data.types;
+package com.rubicon.data.thrift.types;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class StringList implements TBase<StringList._Fields>, java.io.Serializable, Cloneable, Comparable<StringList> {
-  private static final TStruct STRUCT_DESC = new TStruct("StringList");
+public class LongList implements TBase<LongList._Fields>, java.io.Serializable, Cloneable, Comparable<LongList> {
+  private static final TStruct STRUCT_DESC = new TStruct("LongList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<String> values;
+  private List<Long> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.STRING))));
+            new FieldValueMetaData(TType.I64))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(StringList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(LongList.class, metaDataMap);
   }
 
-  public StringList() {
+  public LongList() {
   }
 
-  public StringList(
-    List<String> values)
+  public LongList(
+    List<Long> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public StringList(StringList other) {
+  public LongList(LongList other) {
     if (other.isSetValues()) {
-      List<String> __this__values = new ArrayList<String>();
-      for (String other_element : other.values) {
+      List<Long> __this__values = new ArrayList<Long>();
+      for (Long other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public StringList deepCopy() {
-    return new StringList(this);
+  public LongList deepCopy() {
+    return new LongList(this);
   }
 
   @Deprecated
-  public StringList clone() {
-    return new StringList(this);
+  public LongList clone() {
+    return new LongList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<String> getValuesIterator() {
+  public java.util.Iterator<Long> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(String elem) {
+  public void addToValues(long elem) {
     if (this.values == null) {
-      this.values = new ArrayList<String>();
+      this.values = new ArrayList<Long>();
     }
     this.values.add(elem);
   }
 
-  public List<String> getValues() {
+  public List<Long> getValues() {
     return this.values;
   }
 
-  public StringList setValues(List<String> values) {
+  public LongList setValues(List<Long> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<String>)value);
+        setValues((List<Long>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof StringList)
-      return this.equals((StringList)that);
+    if (that instanceof LongList)
+      return this.equals((LongList)that);
     return false;
   }
 
-  public boolean equals(StringList that) {
+  public boolean equals(LongList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
     return 0;
   }
 
-  public int compareTo(StringList other) {
+  public int compareTo(LongList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    StringList typedOther = (StringList)other;
+    LongList typedOther = (LongList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list24 = iprot.readListBegin();
-              this.values = new ArrayList<String>(_list24.size);
-              for (int _i25 = 0; _i25 < _list24.size; ++_i25)
+              TList _list16 = iprot.readListBegin();
+              this.values = new ArrayList<Long>(_list16.size);
+              for (int _i17 = 0; _i17 < _list16.size; ++_i17)
               {
-                String _elem26;
-                _elem26 = iprot.readString();
-                this.values.add(_elem26);
+                long _elem18;
+                _elem18 = iprot.readI64();
+                this.values.add(_elem18);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.STRING, this.values.size()));
-        for (String _iter27 : this.values)
+        oprot.writeListBegin(new TList(TType.I64, this.values.size()));
+        for (long _iter19 : this.values)
         {
-          oprot.writeString(_iter27);
+          oprot.writeI64(_iter19);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class StringList implements TBase<StringList._Fields>, java.io.Serializab
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("StringList(");
+    StringBuilder sb = new StringBuilder("LongList(");
     boolean first = true;
 
     sb.append("values:");

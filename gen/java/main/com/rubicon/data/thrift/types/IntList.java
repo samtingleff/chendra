@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  */
-package com.rubicon.data.types;
+package com.rubicon.data.thrift.types;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable, Cloneable, Comparable<ShortList> {
-  private static final TStruct STRUCT_DESC = new TStruct("ShortList");
+public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cloneable, Comparable<IntList> {
+  private static final TStruct STRUCT_DESC = new TStruct("IntList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<Short> values;
+  private List<Integer> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.I16))));
+            new FieldValueMetaData(TType.I32))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(ShortList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(IntList.class, metaDataMap);
   }
 
-  public ShortList() {
+  public IntList() {
   }
 
-  public ShortList(
-    List<Short> values)
+  public IntList(
+    List<Integer> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public ShortList(ShortList other) {
+  public IntList(IntList other) {
     if (other.isSetValues()) {
-      List<Short> __this__values = new ArrayList<Short>();
-      for (Short other_element : other.values) {
+      List<Integer> __this__values = new ArrayList<Integer>();
+      for (Integer other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public ShortList deepCopy() {
-    return new ShortList(this);
+  public IntList deepCopy() {
+    return new IntList(this);
   }
 
   @Deprecated
-  public ShortList clone() {
-    return new ShortList(this);
+  public IntList clone() {
+    return new IntList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<Short> getValuesIterator() {
+  public java.util.Iterator<Integer> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(short elem) {
+  public void addToValues(int elem) {
     if (this.values == null) {
-      this.values = new ArrayList<Short>();
+      this.values = new ArrayList<Integer>();
     }
     this.values.add(elem);
   }
 
-  public List<Short> getValues() {
+  public List<Integer> getValues() {
     return this.values;
   }
 
-  public ShortList setValues(List<Short> values) {
+  public IntList setValues(List<Integer> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<Short>)value);
+        setValues((List<Integer>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof ShortList)
-      return this.equals((ShortList)that);
+    if (that instanceof IntList)
+      return this.equals((IntList)that);
     return false;
   }
 
-  public boolean equals(ShortList that) {
+  public boolean equals(IntList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
     return 0;
   }
 
-  public int compareTo(ShortList other) {
+  public int compareTo(IntList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    ShortList typedOther = (ShortList)other;
+    IntList typedOther = (IntList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list8 = iprot.readListBegin();
-              this.values = new ArrayList<Short>(_list8.size);
-              for (int _i9 = 0; _i9 < _list8.size; ++_i9)
+              TList _list12 = iprot.readListBegin();
+              this.values = new ArrayList<Integer>(_list12.size);
+              for (int _i13 = 0; _i13 < _list12.size; ++_i13)
               {
-                short _elem10;
-                _elem10 = iprot.readI16();
-                this.values.add(_elem10);
+                int _elem14;
+                _elem14 = iprot.readI32();
+                this.values.add(_elem14);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.I16, this.values.size()));
-        for (short _iter11 : this.values)
+        oprot.writeListBegin(new TList(TType.I32, this.values.size()));
+        for (int _iter15 : this.values)
         {
-          oprot.writeI16(_iter11);
+          oprot.writeI32(_iter15);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("ShortList(");
+    StringBuilder sb = new StringBuilder("IntList(");
     boolean first = true;
 
     sb.append("values:");

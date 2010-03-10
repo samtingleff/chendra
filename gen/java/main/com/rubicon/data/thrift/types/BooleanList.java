@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  */
-package com.rubicon.data.types;
+package com.rubicon.data.thrift.types;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializable, Cloneable, Comparable<DoubleList> {
-  private static final TStruct STRUCT_DESC = new TStruct("DoubleList");
+public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializable, Cloneable, Comparable<BooleanList> {
+  private static final TStruct STRUCT_DESC = new TStruct("BooleanList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<Double> values;
+  private List<Boolean> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.DOUBLE))));
+            new FieldValueMetaData(TType.BOOL))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(DoubleList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(BooleanList.class, metaDataMap);
   }
 
-  public DoubleList() {
+  public BooleanList() {
   }
 
-  public DoubleList(
-    List<Double> values)
+  public BooleanList(
+    List<Boolean> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public DoubleList(DoubleList other) {
+  public BooleanList(BooleanList other) {
     if (other.isSetValues()) {
-      List<Double> __this__values = new ArrayList<Double>();
-      for (Double other_element : other.values) {
+      List<Boolean> __this__values = new ArrayList<Boolean>();
+      for (Boolean other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public DoubleList deepCopy() {
-    return new DoubleList(this);
+  public BooleanList deepCopy() {
+    return new BooleanList(this);
   }
 
   @Deprecated
-  public DoubleList clone() {
-    return new DoubleList(this);
+  public BooleanList clone() {
+    return new BooleanList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<Double> getValuesIterator() {
+  public java.util.Iterator<Boolean> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(double elem) {
+  public void addToValues(boolean elem) {
     if (this.values == null) {
-      this.values = new ArrayList<Double>();
+      this.values = new ArrayList<Boolean>();
     }
     this.values.add(elem);
   }
 
-  public List<Double> getValues() {
+  public List<Boolean> getValues() {
     return this.values;
   }
 
-  public DoubleList setValues(List<Double> values) {
+  public BooleanList setValues(List<Boolean> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<Double>)value);
+        setValues((List<Boolean>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof DoubleList)
-      return this.equals((DoubleList)that);
+    if (that instanceof BooleanList)
+      return this.equals((BooleanList)that);
     return false;
   }
 
-  public boolean equals(DoubleList that) {
+  public boolean equals(BooleanList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
     return 0;
   }
 
-  public int compareTo(DoubleList other) {
+  public int compareTo(BooleanList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    DoubleList typedOther = (DoubleList)other;
+    BooleanList typedOther = (BooleanList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list20 = iprot.readListBegin();
-              this.values = new ArrayList<Double>(_list20.size);
-              for (int _i21 = 0; _i21 < _list20.size; ++_i21)
+              TList _list0 = iprot.readListBegin();
+              this.values = new ArrayList<Boolean>(_list0.size);
+              for (int _i1 = 0; _i1 < _list0.size; ++_i1)
               {
-                double _elem22;
-                _elem22 = iprot.readDouble();
-                this.values.add(_elem22);
+                boolean _elem2;
+                _elem2 = iprot.readBool();
+                this.values.add(_elem2);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.DOUBLE, this.values.size()));
-        for (double _iter23 : this.values)
+        oprot.writeListBegin(new TList(TType.BOOL, this.values.size()));
+        for (boolean _iter3 : this.values)
         {
-          oprot.writeDouble(_iter23);
+          oprot.writeBool(_iter3);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class DoubleList implements TBase<DoubleList._Fields>, java.io.Serializab
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("DoubleList(");
+    StringBuilder sb = new StringBuilder("BooleanList(");
     boolean first = true;
 
     sb.append("values:");

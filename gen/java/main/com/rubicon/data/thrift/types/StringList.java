@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  */
-package com.rubicon.data.types;
+package com.rubicon.data.thrift.types;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cloneable, Comparable<IntList> {
-  private static final TStruct STRUCT_DESC = new TStruct("IntList");
+public class StringList implements TBase<StringList._Fields>, java.io.Serializable, Cloneable, Comparable<StringList> {
+  private static final TStruct STRUCT_DESC = new TStruct("StringList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<Integer> values;
+  private List<String> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.I32))));
+            new FieldValueMetaData(TType.STRING))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(IntList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(StringList.class, metaDataMap);
   }
 
-  public IntList() {
+  public StringList() {
   }
 
-  public IntList(
-    List<Integer> values)
+  public StringList(
+    List<String> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public IntList(IntList other) {
+  public StringList(StringList other) {
     if (other.isSetValues()) {
-      List<Integer> __this__values = new ArrayList<Integer>();
-      for (Integer other_element : other.values) {
+      List<String> __this__values = new ArrayList<String>();
+      for (String other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public IntList deepCopy() {
-    return new IntList(this);
+  public StringList deepCopy() {
+    return new StringList(this);
   }
 
   @Deprecated
-  public IntList clone() {
-    return new IntList(this);
+  public StringList clone() {
+    return new StringList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<Integer> getValuesIterator() {
+  public java.util.Iterator<String> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(int elem) {
+  public void addToValues(String elem) {
     if (this.values == null) {
-      this.values = new ArrayList<Integer>();
+      this.values = new ArrayList<String>();
     }
     this.values.add(elem);
   }
 
-  public List<Integer> getValues() {
+  public List<String> getValues() {
     return this.values;
   }
 
-  public IntList setValues(List<Integer> values) {
+  public StringList setValues(List<String> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<Integer>)value);
+        setValues((List<String>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof IntList)
-      return this.equals((IntList)that);
+    if (that instanceof StringList)
+      return this.equals((StringList)that);
     return false;
   }
 
-  public boolean equals(IntList that) {
+  public boolean equals(StringList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
     return 0;
   }
 
-  public int compareTo(IntList other) {
+  public int compareTo(StringList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    IntList typedOther = (IntList)other;
+    StringList typedOther = (StringList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list12 = iprot.readListBegin();
-              this.values = new ArrayList<Integer>(_list12.size);
-              for (int _i13 = 0; _i13 < _list12.size; ++_i13)
+              TList _list24 = iprot.readListBegin();
+              this.values = new ArrayList<String>(_list24.size);
+              for (int _i25 = 0; _i25 < _list24.size; ++_i25)
               {
-                int _elem14;
-                _elem14 = iprot.readI32();
-                this.values.add(_elem14);
+                String _elem26;
+                _elem26 = iprot.readString();
+                this.values.add(_elem26);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.I32, this.values.size()));
-        for (int _iter15 : this.values)
+        oprot.writeListBegin(new TList(TType.STRING, this.values.size()));
+        for (String _iter27 : this.values)
         {
-          oprot.writeI32(_iter15);
+          oprot.writeString(_iter27);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("IntList(");
+    StringBuilder sb = new StringBuilder("StringList(");
     boolean first = true;
 
     sb.append("values:");

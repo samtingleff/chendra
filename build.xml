@@ -32,6 +32,7 @@
 		</copy>
 		<javac destdir="${build.path}" target="1.5" debug="${debug}" 
 			classpathref="compile.classpath">
+			<src path="${src.main.gen.path}/" />
 			<src path="${src.main.path}/" />
 			<src path="${src.test.gen.path}/" />
 			<src path="${src.test.path}/" />

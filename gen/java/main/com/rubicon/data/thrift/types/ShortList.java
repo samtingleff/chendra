@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  */
-package com.rubicon.data.types;
+package com.rubicon.data.thrift.types;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializable, Cloneable, Comparable<BooleanList> {
-  private static final TStruct STRUCT_DESC = new TStruct("BooleanList");
+public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable, Cloneable, Comparable<ShortList> {
+  private static final TStruct STRUCT_DESC = new TStruct("ShortList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<Boolean> values;
+  private List<Short> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.BOOL))));
+            new FieldValueMetaData(TType.I16))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(BooleanList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(ShortList.class, metaDataMap);
   }
 
-  public BooleanList() {
+  public ShortList() {
   }
 
-  public BooleanList(
-    List<Boolean> values)
+  public ShortList(
+    List<Short> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public BooleanList(BooleanList other) {
+  public ShortList(ShortList other) {
     if (other.isSetValues()) {
-      List<Boolean> __this__values = new ArrayList<Boolean>();
-      for (Boolean other_element : other.values) {
+      List<Short> __this__values = new ArrayList<Short>();
+      for (Short other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public BooleanList deepCopy() {
-    return new BooleanList(this);
+  public ShortList deepCopy() {
+    return new ShortList(this);
   }
 
   @Deprecated
-  public BooleanList clone() {
-    return new BooleanList(this);
+  public ShortList clone() {
+    return new ShortList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<Boolean> getValuesIterator() {
+  public java.util.Iterator<Short> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(boolean elem) {
+  public void addToValues(short elem) {
     if (this.values == null) {
-      this.values = new ArrayList<Boolean>();
+      this.values = new ArrayList<Short>();
     }
     this.values.add(elem);
   }
 
-  public List<Boolean> getValues() {
+  public List<Short> getValues() {
     return this.values;
   }
 
-  public BooleanList setValues(List<Boolean> values) {
+  public ShortList setValues(List<Short> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<Boolean>)value);
+        setValues((List<Short>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof BooleanList)
-      return this.equals((BooleanList)that);
+    if (that instanceof ShortList)
+      return this.equals((ShortList)that);
     return false;
   }
 
-  public boolean equals(BooleanList that) {
+  public boolean equals(ShortList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
     return 0;
   }
 
-  public int compareTo(BooleanList other) {
+  public int compareTo(ShortList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    BooleanList typedOther = (BooleanList)other;
+    ShortList typedOther = (ShortList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list0 = iprot.readListBegin();
-              this.values = new ArrayList<Boolean>(_list0.size);
-              for (int _i1 = 0; _i1 < _list0.size; ++_i1)
+              TList _list8 = iprot.readListBegin();
+              this.values = new ArrayList<Short>(_list8.size);
+              for (int _i9 = 0; _i9 < _list8.size; ++_i9)
               {
-                boolean _elem2;
-                _elem2 = iprot.readBool();
-                this.values.add(_elem2);
+                short _elem10;
+                _elem10 = iprot.readI16();
+                this.values.add(_elem10);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.BOOL, this.values.size()));
-        for (boolean _iter3 : this.values)
+        oprot.writeListBegin(new TList(TType.I16, this.values.size()));
+        for (short _iter11 : this.values)
         {
-          oprot.writeBool(_iter3);
+          oprot.writeI16(_iter11);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("BooleanList(");
+    StringBuilder sb = new StringBuilder("ShortList(");
     boolean first = true;
 
     sb.append("values:");
