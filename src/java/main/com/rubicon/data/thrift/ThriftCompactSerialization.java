@@ -12,7 +12,7 @@ import org.apache.thrift.TBase;
  *
  * @param <T>
  */
-public class ThriftSerialization<T extends TBase> implements Serialization<T> {
+public class ThriftCompactSerialization<T extends TBase> implements Serialization<T> {
 
 	public boolean accept(Class<?> cls) {
 		Class[] interfaces = cls.getInterfaces();
@@ -24,11 +24,11 @@ public class ThriftSerialization<T extends TBase> implements Serialization<T> {
 	}
 
 	public Deserializer<T> getDeserializer(Class<T> cls) {
-		return new ThriftDeserializer<T>(cls);
+		return new ThriftCompactDeserializer<T>(cls);
 	}
 
 	public Serializer<T> getSerializer(Class<T> cls) {
-		return new ThriftSerializer<T>(cls);
+		return new ThriftCompactSerializer<T>(cls);
 	}
 
 }

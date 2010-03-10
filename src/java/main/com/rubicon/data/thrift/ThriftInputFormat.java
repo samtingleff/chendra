@@ -48,7 +48,7 @@ public class ThriftInputFormat<K extends TBase, V extends TBase> extends
 	public RecordReader<K, V> getRecordReader(InputSplit split, JobConf job,
 			Reporter reporter) throws IOException {
 		reporter.setStatus(split.toString());
-		return new ThriftRecordReader(job, (FileSplit) split, keyClass,
+		return new ThriftRecordReader<K, V>(job, (FileSplit) split, keyClass,
 				valueClass);
 	}
 
@@ -62,9 +62,9 @@ public class ThriftInputFormat<K extends TBase, V extends TBase> extends
 
 		private FSDataInputStream in;
 
-		private ThriftDeserializer<K> keyDeserializer;
+		private ThriftCompactDeserializer<K> keyDeserializer;
 
-		private ThriftDeserializer<V> valueDeserializer;
+		private ThriftCompactDeserializer<V> valueDeserializer;
 
 		private boolean hasMore = true;
 
@@ -79,8 +79,8 @@ public class ThriftInputFormat<K extends TBase, V extends TBase> extends
 			this.split = split;
 			this.keyClass = keyClass;
 			this.valueClass = valueClass;
-			this.keyDeserializer = new ThriftDeserializer<K>(keyClass);
-			this.valueDeserializer = new ThriftDeserializer<V>(valueClass);
+			this.keyDeserializer = new ThriftCompactDeserializer<K>(keyClass);
+			this.valueDeserializer = new ThriftCompactDeserializer<V>(valueClass);
 			init(job);
 		}
 
@@ -125,20 +125,14 @@ public class ThriftInputFormat<K extends TBase, V extends TBase> extends
 		}
 
 		public synchronized boolean next(K key, V value) throws IOException {
-			if (!hasMore)
-				return false;
 			try {
-				byte begin = in.readByte();
+				keyDeserializer.deserialize(key);
+				valueDeserializer.deserialize(value);
+				this.pos = in.getPos();
+				return true;
 			} catch (EOFException e) {
 				return false;
 			}
-			keyDeserializer.deserialize(key);
-			valueDeserializer.deserialize(value);
-			byte end = in.readByte();
-			this.pos = in.getPos();
-			if (end == ThriftFormatMagicBytes.END_FILE)
-				hasMore = false;
-			return true;
 		}
 
 		public synchronized void close() throws IOException {

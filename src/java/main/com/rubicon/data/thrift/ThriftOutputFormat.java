@@ -48,15 +48,15 @@ public class ThriftOutputFormat<K extends TBase, V extends TBase> extends
 			implements RecordWriter<K, V> {
 		private FSDataOutputStream out;
 
-		private ThriftSerializer<K> keySerializer;
+		private ThriftCompactSerializer<K> keySerializer;
 
-		private ThriftSerializer<V> valueSerializer;
+		private ThriftCompactSerializer<V> valueSerializer;
 
 		private ThriftRecordWriter(FSDataOutputStream out, Class<K> keyClass,
 				Class<V> valueClass) throws IOException {
 			this.out = out;
-			this.keySerializer = new ThriftSerializer<K>(keyClass);
-			this.valueSerializer = new ThriftSerializer<V>(valueClass);
+			this.keySerializer = new ThriftCompactSerializer<K>(keyClass);
+			this.valueSerializer = new ThriftCompactSerializer<V>(valueClass);
 			this.keySerializer.open(out);
 			this.valueSerializer.open(out);
 		}
@@ -68,10 +68,8 @@ public class ThriftOutputFormat<K extends TBase, V extends TBase> extends
 		}
 
 		public void write(K key, V value) throws IOException {
-			this.out.writeByte(ThriftFormatMagicBytes.BEGIN_RECORD);
 			this.keySerializer.serialize(key);
 			this.valueSerializer.serialize(value);
-			this.out.writeByte(ThriftFormatMagicBytes.END_FILE);
 		}
 	}
 }

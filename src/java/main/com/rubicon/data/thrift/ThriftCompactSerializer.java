@@ -18,7 +18,7 @@ import org.apache.thrift.transport.TTransport;
  *
  * @param <T>
  */
-public class ThriftSerializer<T extends TBase> implements Serializer<T> {
+public class ThriftCompactSerializer<T extends TBase> implements Serializer<T> {
 
 	private Class<T> cls;
 
@@ -28,7 +28,7 @@ public class ThriftSerializer<T extends TBase> implements Serializer<T> {
 
 	private TProtocol proto;
 
-	public ThriftSerializer(Class<T> cls) {
+	public ThriftCompactSerializer(Class<T> cls) {
 		this.cls = cls;
 	}
 

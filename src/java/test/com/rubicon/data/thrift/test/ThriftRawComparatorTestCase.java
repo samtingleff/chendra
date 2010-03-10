@@ -7,7 +7,7 @@ import java.util.Arrays;
 import org.apache.thrift.TBase;
 
 import com.rubicon.data.thrift.ThriftRawComparator;
-import com.rubicon.data.thrift.ThriftSerializer;
+import com.rubicon.data.thrift.ThriftCompactSerializer;
 import com.rubicon.data.thrift.UserProfile;
 import com.rubicon.data.thrift.types.IntList;
 
@@ -75,7 +75,7 @@ public class ThriftRawComparatorTestCase extends TestCase {
 	private <T extends TBase> SerializedResult serialize(Class cls, T obj1,
 			T obj2) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		ThriftSerializer<T> serializer = new ThriftSerializer<T>(cls);
+		ThriftCompactSerializer<T> serializer = new ThriftCompactSerializer<T>(cls);
 		serializer.open(out);
 		int s1 = out.size();
 		serializer.serialize(obj1);

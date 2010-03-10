@@ -3,8 +3,8 @@ package com.rubicon.data.thrift.test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import com.rubicon.data.thrift.ThriftDeserializer;
-import com.rubicon.data.thrift.ThriftSerializer;
+import com.rubicon.data.thrift.ThriftCompactDeserializer;
+import com.rubicon.data.thrift.ThriftCompactSerializer;
 import com.rubicon.data.thrift.UserId;
 import com.rubicon.data.thrift.UserProfile;
 
@@ -15,7 +15,7 @@ public class ThriftSerializationTestCase extends TestCase {
 	public void testUserIdSerialization() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		UserId uid1 = new UserId(12);
-		ThriftSerializer<UserId> serializer = new ThriftSerializer<UserId>(
+		ThriftCompactSerializer<UserId> serializer = new ThriftCompactSerializer<UserId>(
 				UserId.class);
 		serializer.open(out);
 		serializer.serialize(uid1);
@@ -25,7 +25,7 @@ public class ThriftSerializationTestCase extends TestCase {
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 
 		UserId uid2 = new UserId();
-		ThriftDeserializer<UserId> deserializer = new ThriftDeserializer<UserId>(
+		ThriftCompactDeserializer<UserId> deserializer = new ThriftCompactDeserializer<UserId>(
 				UserId.class);
 		deserializer.open(in);
 		deserializer.deserialize(uid2);
@@ -38,7 +38,7 @@ public class ThriftSerializationTestCase extends TestCase {
 	public void testUserProfileSerialization() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		UserProfile user1 = new UserProfile(12, "hello", "world");
-		ThriftSerializer<UserProfile> serializer = new ThriftSerializer<UserProfile>(
+		ThriftCompactSerializer<UserProfile> serializer = new ThriftCompactSerializer<UserProfile>(
 				UserProfile.class);
 		serializer.open(out);
 		serializer.serialize(user1);
@@ -48,7 +48,7 @@ public class ThriftSerializationTestCase extends TestCase {
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 
 		UserProfile user2 = new UserProfile();
-		ThriftDeserializer<UserProfile> deserializer = new ThriftDeserializer<UserProfile>(
+		ThriftCompactDeserializer<UserProfile> deserializer = new ThriftCompactDeserializer<UserProfile>(
 				UserProfile.class);
 		deserializer.open(in);
 		deserializer.deserialize(user2);
