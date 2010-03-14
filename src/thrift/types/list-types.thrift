@@ -1,4 +1,4 @@
-namespace java com.rubicon.data.types
+namespace java com.rubicon.data.thrift.types
 
 struct BooleanList {
  1: list<bool> values
@@ -12,7 +12,7 @@ struct ShortList {
  1: list<i16> values
 }
 
-struct IntList {
+struct IntegerList {
  1: list<i32> values
 }
 

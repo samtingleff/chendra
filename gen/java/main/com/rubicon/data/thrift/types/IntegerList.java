@@ -23,8 +23,8 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cloneable, Comparable<IntList> {
-  private static final TStruct STRUCT_DESC = new TStruct("IntList");
+public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializable, Cloneable, Comparable<IntegerList> {
+  private static final TStruct STRUCT_DESC = new TStruct("IntegerList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
@@ -94,13 +94,13 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(IntList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(IntegerList.class, metaDataMap);
   }
 
-  public IntList() {
+  public IntegerList() {
   }
 
-  public IntList(
+  public IntegerList(
     List<Integer> values)
   {
     this();
@@ -110,7 +110,7 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public IntList(IntList other) {
+  public IntegerList(IntegerList other) {
     if (other.isSetValues()) {
       List<Integer> __this__values = new ArrayList<Integer>();
       for (Integer other_element : other.values) {
@@ -120,13 +120,13 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
     }
   }
 
-  public IntList deepCopy() {
-    return new IntList(this);
+  public IntegerList deepCopy() {
+    return new IntegerList(this);
   }
 
   @Deprecated
-  public IntList clone() {
-    return new IntList(this);
+  public IntegerList clone() {
+    return new IntegerList(this);
   }
 
   public int getValuesSize() {
@@ -148,7 +148,7 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
     return this.values;
   }
 
-  public IntList setValues(List<Integer> values) {
+  public IntegerList setValues(List<Integer> values) {
     this.values = values;
     return this;
   }
@@ -215,12 +215,12 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof IntList)
-      return this.equals((IntList)that);
+    if (that instanceof IntegerList)
+      return this.equals((IntegerList)that);
     return false;
   }
 
-  public boolean equals(IntList that) {
+  public boolean equals(IntegerList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
     return 0;
   }
 
-  public int compareTo(IntList other) {
+  public int compareTo(IntegerList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    IntList typedOther = (IntList)other;
+    IntegerList typedOther = (IntegerList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -319,7 +319,7 @@ public class IntList implements TBase<IntList._Fields>, java.io.Serializable, Cl
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("IntList(");
+    StringBuilder sb = new StringBuilder("IntegerList(");
     boolean first = true;
 
     sb.append("values:");
