@@ -9,32 +9,32 @@ import org.apache.thrift.TBase;
 import com.rubicon.data.thrift.ThriftRawComparator;
 import com.rubicon.data.thrift.ThriftCompactSerializer;
 import com.rubicon.data.thrift.UserProfile;
-import com.rubicon.data.thrift.types.IntegerList;
+import com.rubicon.data.thrift.types.TIntegerList;
 
 import junit.framework.TestCase;
 
 public class ThriftRawComparatorTestCase extends TestCase {
 
-	public void testIntegerListComparator() throws Exception {
-		IntegerList list1 = new IntegerList(Arrays.asList(10, 12, 14));
-		IntegerList list2 = new IntegerList(Arrays.asList(10, 12, 14));
-		ThriftRawComparator<IntegerList> comparator = new ThriftRawComparator<IntegerList>();
+	public void testTIntegerListComparator() throws Exception {
+		TIntegerList list1 = new TIntegerList(Arrays.asList(10, 12, 14));
+		TIntegerList list2 = new TIntegerList(Arrays.asList(10, 12, 14));
+		ThriftRawComparator<TIntegerList> comparator = new ThriftRawComparator<TIntegerList>();
 		assertTrue(comparator.compare(list1, list2) == 0);
-		SerializedResult ser = serialize(IntegerList.class, list1, list2);
+		SerializedResult ser = serialize(TIntegerList.class, list1, list2);
 		assertEquals(comparator.compare(ser.bytes, ser.s1, ser.l1, ser.bytes,
 				ser.s2, ser.l2), 0);
 
 		// list1 > list2
-		list1 = new IntegerList(Arrays.asList(10, 12, 15));
+		list1 = new TIntegerList(Arrays.asList(10, 12, 15));
 		assertTrue(comparator.compare(list1, list2) == 1);
-		ser = serialize(IntegerList.class, list1, list2);
+		ser = serialize(TIntegerList.class, list1, list2);
 		assertEquals(comparator.compare(ser.bytes, ser.s1, ser.l1, ser.bytes,
 				ser.s2, ser.l2), 1);
 
 		// list1 < list2
-		list1 = new IntegerList(Arrays.asList(10, 12, 13));
+		list1 = new TIntegerList(Arrays.asList(10, 12, 13));
 		assertTrue(comparator.compare(list1, list2) == -1);
-		ser = serialize(IntegerList.class, list1, list2);
+		ser = serialize(TIntegerList.class, list1, list2);
 		assertEquals(comparator.compare(ser.bytes, ser.s1, ser.l1, ser.bytes,
 				ser.s2, ser.l2), -1);
 	}

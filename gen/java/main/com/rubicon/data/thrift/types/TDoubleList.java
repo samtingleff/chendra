@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable, Cloneable {
-  private static final TStruct STRUCT_DESC = new TStruct("StringMap");
+public class TDoubleList implements TBase<TDoubleList._Fields>, java.io.Serializable, Cloneable, Comparable<TDoubleList> {
+  private static final TStruct STRUCT_DESC = new TStruct("TDoubleList");
 
-  private static final TField VALUES_FIELD_DESC = new TField("values", TType.MAP, (short)1);
+  private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private Map<String,String> values;
+  private List<Double> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -89,20 +89,19 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
 
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
-        new MapMetaData(TType.MAP, 
-            new FieldValueMetaData(TType.STRING), 
-            new FieldValueMetaData(TType.STRING))));
+        new ListMetaData(TType.LIST, 
+            new FieldValueMetaData(TType.DOUBLE))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(StringMap.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(TDoubleList.class, metaDataMap);
   }
 
-  public StringMap() {
+  public TDoubleList() {
   }
 
-  public StringMap(
-    Map<String,String> values)
+  public TDoubleList(
+    List<Double> values)
   {
     this();
     this.values = values;
@@ -111,49 +110,45 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public StringMap(StringMap other) {
+  public TDoubleList(TDoubleList other) {
     if (other.isSetValues()) {
-      Map<String,String> __this__values = new HashMap<String,String>();
-      for (Map.Entry<String, String> other_element : other.values.entrySet()) {
-
-        String other_element_key = other_element.getKey();
-        String other_element_value = other_element.getValue();
-
-        String __this__values_copy_key = other_element_key;
-
-        String __this__values_copy_value = other_element_value;
-
-        __this__values.put(__this__values_copy_key, __this__values_copy_value);
+      List<Double> __this__values = new ArrayList<Double>();
+      for (Double other_element : other.values) {
+        __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public StringMap deepCopy() {
-    return new StringMap(this);
+  public TDoubleList deepCopy() {
+    return new TDoubleList(this);
   }
 
   @Deprecated
-  public StringMap clone() {
-    return new StringMap(this);
+  public TDoubleList clone() {
+    return new TDoubleList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public void putToValues(String key, String val) {
-    if (this.values == null) {
-      this.values = new HashMap<String,String>();
-    }
-    this.values.put(key, val);
+  public java.util.Iterator<Double> getValuesIterator() {
+    return (this.values == null) ? null : this.values.iterator();
   }
 
-  public Map<String,String> getValues() {
+  public void addToValues(double elem) {
+    if (this.values == null) {
+      this.values = new ArrayList<Double>();
+    }
+    this.values.add(elem);
+  }
+
+  public List<Double> getValues() {
     return this.values;
   }
 
-  public StringMap setValues(Map<String,String> values) {
+  public TDoubleList setValues(List<Double> values) {
     this.values = values;
     return this;
   }
@@ -179,7 +174,7 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
       if (value == null) {
         unsetValues();
       } else {
-        setValues((Map<String,String>)value);
+        setValues((List<Double>)value);
       }
       break;
 
@@ -220,12 +215,12 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof StringMap)
-      return this.equals((StringMap)that);
+    if (that instanceof TDoubleList)
+      return this.equals((TDoubleList)that);
     return false;
   }
 
-  public boolean equals(StringMap that) {
+  public boolean equals(TDoubleList that) {
     if (that == null)
       return false;
 
@@ -246,6 +241,26 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
     return 0;
   }
 
+  public int compareTo(TDoubleList other) {
+    if (!getClass().equals(other.getClass())) {
+      return getClass().getName().compareTo(other.getClass().getName());
+    }
+
+    int lastComparison = 0;
+    TDoubleList typedOther = (TDoubleList)other;
+
+    lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetValues()) {      lastComparison = TBaseHelper.compareTo(values, typedOther.values);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    return 0;
+  }
+
   public void read(TProtocol iprot) throws TException {
     TField field;
     iprot.readStructBegin();
@@ -257,19 +272,17 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
       }
       switch (field.id) {
         case 1: // VALUES
-          if (field.type == TType.MAP) {
+          if (field.type == TType.LIST) {
             {
-              TMap _map0 = iprot.readMapBegin();
-              this.values = new HashMap<String,String>(2*_map0.size);
-              for (int _i1 = 0; _i1 < _map0.size; ++_i1)
+              TList _list20 = iprot.readListBegin();
+              this.values = new ArrayList<Double>(_list20.size);
+              for (int _i21 = 0; _i21 < _list20.size; ++_i21)
               {
-                String _key2;
-                String _val3;
-                _key2 = iprot.readString();
-                _val3 = iprot.readString();
-                this.values.put(_key2, _val3);
+                double _elem22;
+                _elem22 = iprot.readDouble();
+                this.values.add(_elem22);
               }
-              iprot.readMapEnd();
+              iprot.readListEnd();
             }
           } else { 
             TProtocolUtil.skip(iprot, field.type);
@@ -291,13 +304,12 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeMapBegin(new TMap(TType.STRING, TType.STRING, this.values.size()));
-        for (Map.Entry<String, String> _iter4 : this.values.entrySet())
+        oprot.writeListBegin(new TList(TType.DOUBLE, this.values.size()));
+        for (double _iter23 : this.values)
         {
-          oprot.writeString(_iter4.getKey());
-          oprot.writeString(_iter4.getValue());
+          oprot.writeDouble(_iter23);
         }
-        oprot.writeMapEnd();
+        oprot.writeListEnd();
       }
       oprot.writeFieldEnd();
     }
@@ -307,7 +319,7 @@ public class StringMap implements TBase<StringMap._Fields>, java.io.Serializable
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("StringMap(");
+    StringBuilder sb = new StringBuilder("TDoubleList(");
     boolean first = true;
 
     sb.append("values:");

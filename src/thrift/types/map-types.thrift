@@ -1,5 +1,5 @@
-namespace java com.rubicon.data.types
+namespace java com.rubicon.data.thrift.types
 
-struct StringMap {
+struct TStringMap {
  1: map<string, string> values
 }

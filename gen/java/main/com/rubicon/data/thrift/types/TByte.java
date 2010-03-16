@@ -23,16 +23,16 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable, Cloneable, Comparable<ShortList> {
-  private static final TStruct STRUCT_DESC = new TStruct("ShortList");
+public class TByte implements TBase<TByte._Fields>, java.io.Serializable, Cloneable, Comparable<TByte> {
+  private static final TStruct STRUCT_DESC = new TStruct("TByte");
 
-  private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
+  private static final TField VALUE_FIELD_DESC = new TField("value", TType.BYTE, (short)1);
 
-  private List<Short> values;
+  private byte value;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
-    VALUES((short)1, "values");
+    VALUE((short)1, "value");
 
     private static final Map<Integer, _Fields> byId = new HashMap<Integer, _Fields>();
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -86,95 +86,77 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   }
 
   // isset id assignments
+  private static final int __VALUE_ISSET_ID = 0;
+  private BitSet __isset_bit_vector = new BitSet(1);
 
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
-    put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
-        new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.I16))));
+    put(_Fields.VALUE, new FieldMetaData("value", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.BYTE)));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(ShortList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(TByte.class, metaDataMap);
   }
 
-  public ShortList() {
+  public TByte() {
   }
 
-  public ShortList(
-    List<Short> values)
+  public TByte(
+    byte value)
   {
     this();
-    this.values = values;
+    this.value = value;
+    setValueIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public ShortList(ShortList other) {
-    if (other.isSetValues()) {
-      List<Short> __this__values = new ArrayList<Short>();
-      for (Short other_element : other.values) {
-        __this__values.add(other_element);
-      }
-      this.values = __this__values;
-    }
+  public TByte(TByte other) {
+    __isset_bit_vector.clear();
+    __isset_bit_vector.or(other.__isset_bit_vector);
+    this.value = other.value;
   }
 
-  public ShortList deepCopy() {
-    return new ShortList(this);
+  public TByte deepCopy() {
+    return new TByte(this);
   }
 
   @Deprecated
-  public ShortList clone() {
-    return new ShortList(this);
+  public TByte clone() {
+    return new TByte(this);
   }
 
-  public int getValuesSize() {
-    return (this.values == null) ? 0 : this.values.size();
+  public byte getValue() {
+    return this.value;
   }
 
-  public java.util.Iterator<Short> getValuesIterator() {
-    return (this.values == null) ? null : this.values.iterator();
-  }
-
-  public void addToValues(short elem) {
-    if (this.values == null) {
-      this.values = new ArrayList<Short>();
-    }
-    this.values.add(elem);
-  }
-
-  public List<Short> getValues() {
-    return this.values;
-  }
-
-  public ShortList setValues(List<Short> values) {
-    this.values = values;
+  public TByte setValue(byte value) {
+    this.value = value;
+    setValueIsSet(true);
     return this;
   }
 
-  public void unsetValues() {
-    this.values = null;
+  public void unsetValue() {
+    __isset_bit_vector.clear(__VALUE_ISSET_ID);
   }
 
-  /** Returns true if field values is set (has been asigned a value) and false otherwise */
-  public boolean isSetValues() {
-    return this.values != null;
+  /** Returns true if field value is set (has been asigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return __isset_bit_vector.get(__VALUE_ISSET_ID);
   }
 
-  public void setValuesIsSet(boolean value) {
-    if (!value) {
-      this.values = null;
-    }
+  public void setValueIsSet(boolean value) {
+    __isset_bit_vector.set(__VALUE_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case VALUES:
+    case VALUE:
       if (value == null) {
-        unsetValues();
+        unsetValue();
       } else {
-        setValues((List<Short>)value);
+        setValue((Byte)value);
       }
       break;
 
@@ -187,8 +169,8 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case VALUES:
-      return getValues();
+    case VALUE:
+      return new Byte(getValue());
 
     }
     throw new IllegalStateException();
@@ -201,8 +183,8 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
   public boolean isSet(_Fields field) {
     switch (field) {
-    case VALUES:
-      return isSetValues();
+    case VALUE:
+      return isSetValue();
     }
     throw new IllegalStateException();
   }
@@ -215,21 +197,21 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof ShortList)
-      return this.equals((ShortList)that);
+    if (that instanceof TByte)
+      return this.equals((TByte)that);
     return false;
   }
 
-  public boolean equals(ShortList that) {
+  public boolean equals(TByte that) {
     if (that == null)
       return false;
 
-    boolean this_present_values = true && this.isSetValues();
-    boolean that_present_values = true && that.isSetValues();
-    if (this_present_values || that_present_values) {
-      if (!(this_present_values && that_present_values))
+    boolean this_present_value = true;
+    boolean that_present_value = true;
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
         return false;
-      if (!this.values.equals(that.values))
+      if (this.value != that.value)
         return false;
     }
 
@@ -241,19 +223,19 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
     return 0;
   }
 
-  public int compareTo(ShortList other) {
+  public int compareTo(TByte other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    ShortList typedOther = (ShortList)other;
+    TByte typedOther = (TByte)other;
 
-    lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
+    lastComparison = Boolean.valueOf(isSetValue()).compareTo(typedOther.isSetValue());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetValues()) {      lastComparison = TBaseHelper.compareTo(values, typedOther.values);
+    if (isSetValue()) {      lastComparison = TBaseHelper.compareTo(value, typedOther.value);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -271,19 +253,10 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
         break;
       }
       switch (field.id) {
-        case 1: // VALUES
-          if (field.type == TType.LIST) {
-            {
-              TList _list8 = iprot.readListBegin();
-              this.values = new ArrayList<Short>(_list8.size);
-              for (int _i9 = 0; _i9 < _list8.size; ++_i9)
-              {
-                short _elem10;
-                _elem10 = iprot.readI16();
-                this.values.add(_elem10);
-              }
-              iprot.readListEnd();
-            }
+        case 1: // VALUE
+          if (field.type == TType.BYTE) {
+            this.value = iprot.readByte();
+            setValueIsSet(true);
           } else { 
             TProtocolUtil.skip(iprot, field.type);
           }
@@ -301,33 +274,20 @@ public class ShortList implements TBase<ShortList._Fields>, java.io.Serializable
     validate();
 
     oprot.writeStructBegin(STRUCT_DESC);
-    if (this.values != null) {
-      oprot.writeFieldBegin(VALUES_FIELD_DESC);
-      {
-        oprot.writeListBegin(new TList(TType.I16, this.values.size()));
-        for (short _iter11 : this.values)
-        {
-          oprot.writeI16(_iter11);
-        }
-        oprot.writeListEnd();
-      }
-      oprot.writeFieldEnd();
-    }
+    oprot.writeFieldBegin(VALUE_FIELD_DESC);
+    oprot.writeByte(this.value);
+    oprot.writeFieldEnd();
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("ShortList(");
+    StringBuilder sb = new StringBuilder("TByte(");
     boolean first = true;
 
-    sb.append("values:");
-    if (this.values == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.values);
-    }
+    sb.append("value:");
+    sb.append(this.value);
     first = false;
     sb.append(")");
     return sb.toString();

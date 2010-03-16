@@ -23,16 +23,16 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializable, Cloneable, Comparable<BooleanList> {
-  private static final TStruct STRUCT_DESC = new TStruct("BooleanList");
+public class TLong implements TBase<TLong._Fields>, java.io.Serializable, Cloneable, Comparable<TLong> {
+  private static final TStruct STRUCT_DESC = new TStruct("TLong");
 
-  private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
+  private static final TField VALUE_FIELD_DESC = new TField("value", TType.I64, (short)1);
 
-  private List<Boolean> values;
+  private long value;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
-    VALUES((short)1, "values");
+    VALUE((short)1, "value");
 
     private static final Map<Integer, _Fields> byId = new HashMap<Integer, _Fields>();
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -86,95 +86,77 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   }
 
   // isset id assignments
+  private static final int __VALUE_ISSET_ID = 0;
+  private BitSet __isset_bit_vector = new BitSet(1);
 
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
-    put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
-        new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.BOOL))));
+    put(_Fields.VALUE, new FieldMetaData("value", TFieldRequirementType.DEFAULT, 
+        new FieldValueMetaData(TType.I64)));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(BooleanList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(TLong.class, metaDataMap);
   }
 
-  public BooleanList() {
+  public TLong() {
   }
 
-  public BooleanList(
-    List<Boolean> values)
+  public TLong(
+    long value)
   {
     this();
-    this.values = values;
+    this.value = value;
+    setValueIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public BooleanList(BooleanList other) {
-    if (other.isSetValues()) {
-      List<Boolean> __this__values = new ArrayList<Boolean>();
-      for (Boolean other_element : other.values) {
-        __this__values.add(other_element);
-      }
-      this.values = __this__values;
-    }
+  public TLong(TLong other) {
+    __isset_bit_vector.clear();
+    __isset_bit_vector.or(other.__isset_bit_vector);
+    this.value = other.value;
   }
 
-  public BooleanList deepCopy() {
-    return new BooleanList(this);
+  public TLong deepCopy() {
+    return new TLong(this);
   }
 
   @Deprecated
-  public BooleanList clone() {
-    return new BooleanList(this);
+  public TLong clone() {
+    return new TLong(this);
   }
 
-  public int getValuesSize() {
-    return (this.values == null) ? 0 : this.values.size();
+  public long getValue() {
+    return this.value;
   }
 
-  public java.util.Iterator<Boolean> getValuesIterator() {
-    return (this.values == null) ? null : this.values.iterator();
-  }
-
-  public void addToValues(boolean elem) {
-    if (this.values == null) {
-      this.values = new ArrayList<Boolean>();
-    }
-    this.values.add(elem);
-  }
-
-  public List<Boolean> getValues() {
-    return this.values;
-  }
-
-  public BooleanList setValues(List<Boolean> values) {
-    this.values = values;
+  public TLong setValue(long value) {
+    this.value = value;
+    setValueIsSet(true);
     return this;
   }
 
-  public void unsetValues() {
-    this.values = null;
+  public void unsetValue() {
+    __isset_bit_vector.clear(__VALUE_ISSET_ID);
   }
 
-  /** Returns true if field values is set (has been asigned a value) and false otherwise */
-  public boolean isSetValues() {
-    return this.values != null;
+  /** Returns true if field value is set (has been asigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return __isset_bit_vector.get(__VALUE_ISSET_ID);
   }
 
-  public void setValuesIsSet(boolean value) {
-    if (!value) {
-      this.values = null;
-    }
+  public void setValueIsSet(boolean value) {
+    __isset_bit_vector.set(__VALUE_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case VALUES:
+    case VALUE:
       if (value == null) {
-        unsetValues();
+        unsetValue();
       } else {
-        setValues((List<Boolean>)value);
+        setValue((Long)value);
       }
       break;
 
@@ -187,8 +169,8 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case VALUES:
-      return getValues();
+    case VALUE:
+      return new Long(getValue());
 
     }
     throw new IllegalStateException();
@@ -201,8 +183,8 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
   public boolean isSet(_Fields field) {
     switch (field) {
-    case VALUES:
-      return isSetValues();
+    case VALUE:
+      return isSetValue();
     }
     throw new IllegalStateException();
   }
@@ -215,21 +197,21 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof BooleanList)
-      return this.equals((BooleanList)that);
+    if (that instanceof TLong)
+      return this.equals((TLong)that);
     return false;
   }
 
-  public boolean equals(BooleanList that) {
+  public boolean equals(TLong that) {
     if (that == null)
       return false;
 
-    boolean this_present_values = true && this.isSetValues();
-    boolean that_present_values = true && that.isSetValues();
-    if (this_present_values || that_present_values) {
-      if (!(this_present_values && that_present_values))
+    boolean this_present_value = true;
+    boolean that_present_value = true;
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
         return false;
-      if (!this.values.equals(that.values))
+      if (this.value != that.value)
         return false;
     }
 
@@ -241,19 +223,19 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
     return 0;
   }
 
-  public int compareTo(BooleanList other) {
+  public int compareTo(TLong other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    BooleanList typedOther = (BooleanList)other;
+    TLong typedOther = (TLong)other;
 
-    lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
+    lastComparison = Boolean.valueOf(isSetValue()).compareTo(typedOther.isSetValue());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetValues()) {      lastComparison = TBaseHelper.compareTo(values, typedOther.values);
+    if (isSetValue()) {      lastComparison = TBaseHelper.compareTo(value, typedOther.value);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -271,19 +253,10 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
         break;
       }
       switch (field.id) {
-        case 1: // VALUES
-          if (field.type == TType.LIST) {
-            {
-              TList _list0 = iprot.readListBegin();
-              this.values = new ArrayList<Boolean>(_list0.size);
-              for (int _i1 = 0; _i1 < _list0.size; ++_i1)
-              {
-                boolean _elem2;
-                _elem2 = iprot.readBool();
-                this.values.add(_elem2);
-              }
-              iprot.readListEnd();
-            }
+        case 1: // VALUE
+          if (field.type == TType.I64) {
+            this.value = iprot.readI64();
+            setValueIsSet(true);
           } else { 
             TProtocolUtil.skip(iprot, field.type);
           }
@@ -301,33 +274,20 @@ public class BooleanList implements TBase<BooleanList._Fields>, java.io.Serializ
     validate();
 
     oprot.writeStructBegin(STRUCT_DESC);
-    if (this.values != null) {
-      oprot.writeFieldBegin(VALUES_FIELD_DESC);
-      {
-        oprot.writeListBegin(new TList(TType.BOOL, this.values.size()));
-        for (boolean _iter3 : this.values)
-        {
-          oprot.writeBool(_iter3);
-        }
-        oprot.writeListEnd();
-      }
-      oprot.writeFieldEnd();
-    }
+    oprot.writeFieldBegin(VALUE_FIELD_DESC);
+    oprot.writeI64(this.value);
+    oprot.writeFieldEnd();
     oprot.writeFieldStop();
     oprot.writeStructEnd();
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("BooleanList(");
+    StringBuilder sb = new StringBuilder("TLong(");
     boolean first = true;
 
-    sb.append("values:");
-    if (this.values == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.values);
-    }
+    sb.append("value:");
+    sb.append(this.value);
     first = false;
     sb.append(")");
     return sb.toString();

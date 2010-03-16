@@ -1,29 +1,29 @@
 namespace java com.rubicon.data.thrift.types
 
-struct BooleanList {
+struct TBooleanList {
  1: list<bool> values
 }
 
-struct ByteList {
+struct TByteList {
  1: list<byte> values
 }
 
-struct ShortList {
+struct TShortList {
  1: list<i16> values
 }
 
-struct IntegerList {
+struct TIntegerList {
  1: list<i32> values
 }
 
-struct LongList {
+struct TLongList {
  1: list<i64> values
 }
 
-struct DoubleList {
+struct TDoubleList {
  1: list<double> values
 }
 
-struct StringList {
+struct TStringList {
  1: list<string> values
 }

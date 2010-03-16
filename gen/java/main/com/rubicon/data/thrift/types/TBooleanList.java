@@ -23,12 +23,12 @@ import org.apache.thrift.*;
 import org.apache.thrift.meta_data.*;
 import org.apache.thrift.protocol.*;
 
-public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializable, Cloneable, Comparable<IntegerList> {
-  private static final TStruct STRUCT_DESC = new TStruct("IntegerList");
+public class TBooleanList implements TBase<TBooleanList._Fields>, java.io.Serializable, Cloneable, Comparable<TBooleanList> {
+  private static final TStruct STRUCT_DESC = new TStruct("TBooleanList");
 
   private static final TField VALUES_FIELD_DESC = new TField("values", TType.LIST, (short)1);
 
-  private List<Integer> values;
+  private List<Boolean> values;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements TFieldIdEnum {
@@ -90,18 +90,18 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
   public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
     put(_Fields.VALUES, new FieldMetaData("values", TFieldRequirementType.DEFAULT, 
         new ListMetaData(TType.LIST, 
-            new FieldValueMetaData(TType.I32))));
+            new FieldValueMetaData(TType.BOOL))));
   }});
 
   static {
-    FieldMetaData.addStructMetaDataMap(IntegerList.class, metaDataMap);
+    FieldMetaData.addStructMetaDataMap(TBooleanList.class, metaDataMap);
   }
 
-  public IntegerList() {
+  public TBooleanList() {
   }
 
-  public IntegerList(
-    List<Integer> values)
+  public TBooleanList(
+    List<Boolean> values)
   {
     this();
     this.values = values;
@@ -110,45 +110,45 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public IntegerList(IntegerList other) {
+  public TBooleanList(TBooleanList other) {
     if (other.isSetValues()) {
-      List<Integer> __this__values = new ArrayList<Integer>();
-      for (Integer other_element : other.values) {
+      List<Boolean> __this__values = new ArrayList<Boolean>();
+      for (Boolean other_element : other.values) {
         __this__values.add(other_element);
       }
       this.values = __this__values;
     }
   }
 
-  public IntegerList deepCopy() {
-    return new IntegerList(this);
+  public TBooleanList deepCopy() {
+    return new TBooleanList(this);
   }
 
   @Deprecated
-  public IntegerList clone() {
-    return new IntegerList(this);
+  public TBooleanList clone() {
+    return new TBooleanList(this);
   }
 
   public int getValuesSize() {
     return (this.values == null) ? 0 : this.values.size();
   }
 
-  public java.util.Iterator<Integer> getValuesIterator() {
+  public java.util.Iterator<Boolean> getValuesIterator() {
     return (this.values == null) ? null : this.values.iterator();
   }
 
-  public void addToValues(int elem) {
+  public void addToValues(boolean elem) {
     if (this.values == null) {
-      this.values = new ArrayList<Integer>();
+      this.values = new ArrayList<Boolean>();
     }
     this.values.add(elem);
   }
 
-  public List<Integer> getValues() {
+  public List<Boolean> getValues() {
     return this.values;
   }
 
-  public IntegerList setValues(List<Integer> values) {
+  public TBooleanList setValues(List<Boolean> values) {
     this.values = values;
     return this;
   }
@@ -174,7 +174,7 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
       if (value == null) {
         unsetValues();
       } else {
-        setValues((List<Integer>)value);
+        setValues((List<Boolean>)value);
       }
       break;
 
@@ -215,12 +215,12 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof IntegerList)
-      return this.equals((IntegerList)that);
+    if (that instanceof TBooleanList)
+      return this.equals((TBooleanList)that);
     return false;
   }
 
-  public boolean equals(IntegerList that) {
+  public boolean equals(TBooleanList that) {
     if (that == null)
       return false;
 
@@ -241,13 +241,13 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
     return 0;
   }
 
-  public int compareTo(IntegerList other) {
+  public int compareTo(TBooleanList other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
-    IntegerList typedOther = (IntegerList)other;
+    TBooleanList typedOther = (TBooleanList)other;
 
     lastComparison = Boolean.valueOf(isSetValues()).compareTo(typedOther.isSetValues());
     if (lastComparison != 0) {
@@ -274,13 +274,13 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
         case 1: // VALUES
           if (field.type == TType.LIST) {
             {
-              TList _list12 = iprot.readListBegin();
-              this.values = new ArrayList<Integer>(_list12.size);
-              for (int _i13 = 0; _i13 < _list12.size; ++_i13)
+              TList _list0 = iprot.readListBegin();
+              this.values = new ArrayList<Boolean>(_list0.size);
+              for (int _i1 = 0; _i1 < _list0.size; ++_i1)
               {
-                int _elem14;
-                _elem14 = iprot.readI32();
-                this.values.add(_elem14);
+                boolean _elem2;
+                _elem2 = iprot.readBool();
+                this.values.add(_elem2);
               }
               iprot.readListEnd();
             }
@@ -304,10 +304,10 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
     if (this.values != null) {
       oprot.writeFieldBegin(VALUES_FIELD_DESC);
       {
-        oprot.writeListBegin(new TList(TType.I32, this.values.size()));
-        for (int _iter15 : this.values)
+        oprot.writeListBegin(new TList(TType.BOOL, this.values.size()));
+        for (boolean _iter3 : this.values)
         {
-          oprot.writeI32(_iter15);
+          oprot.writeBool(_iter3);
         }
         oprot.writeListEnd();
       }
@@ -319,7 +319,7 @@ public class IntegerList implements TBase<IntegerList._Fields>, java.io.Serializ
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("IntegerList(");
+    StringBuilder sb = new StringBuilder("TBooleanList(");
     boolean first = true;
 
     sb.append("values:");
