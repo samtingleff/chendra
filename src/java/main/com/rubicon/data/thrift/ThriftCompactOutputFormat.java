@@ -20,7 +20,7 @@ import org.apache.thrift.TBase;
  * @param <K>
  * @param <V>
  */
-public class ThriftOutputFormat<K extends TBase, V extends TBase> extends
+public class ThriftCompactOutputFormat<K extends TBase, V extends TBase> extends
 		FileOutputFormat<K, V> {
 
 	private static Class keyClass;

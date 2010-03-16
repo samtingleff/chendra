@@ -24,7 +24,7 @@ import org.apache.thrift.transport.TTransportException;
  * @param <K>
  * @param <V>
  */
-public class ThriftInputFormat<K extends TBase, V extends TBase> extends
+public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		FileInputFormat<K, V> {
 
 	private static Class keyClass;
