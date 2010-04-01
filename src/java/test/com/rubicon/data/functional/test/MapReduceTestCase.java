@@ -15,15 +15,14 @@ public class MapReduceTestCase extends TestCase {
 	public void testMap() {
 		Integer[] intArray = new Integer[] { 10, 12, 1233, 1234, 123, 903434,
 				245234 };
-		List<Long> longs = new MapReduce().map(Arrays.asList(intArray),
-				new Mapper<Integer, Long>() {
-					public void map(Iterable<Integer> values,
-							Collector<Long> collector) {
-						for (Integer i : values) {
-							collector.collect(i.longValue());
-						}
-					}
-				});
+		List<Long> longs = new MapReduce<Integer, Long, Integer>().map(Arrays
+				.asList(intArray), new Mapper<Integer, Long>() {
+			public void map(Iterable<Integer> values, Collector<Long> collector) {
+				for (Integer i : values) {
+					collector.collect(i.longValue());
+				}
+			}
+		});
 		assertNotNull(longs);
 		assertEquals(longs.size(), intArray.length);
 	}
@@ -31,16 +30,16 @@ public class MapReduceTestCase extends TestCase {
 	public void testReduce() {
 		Integer[] intArray = new Integer[] { 10, 12, 1233, 1234, 123, 903434,
 				245234 };
-		Long l = new MapReduce().reduce(Arrays.asList(intArray),
-				new Reducer<Integer, Long>() {
-					public Long reduce(Iterable<Integer> values) {
-						long sum = 0;
-						for (Integer i : values) {
-							sum += i.intValue();
-						}
-						return new Long(sum);
-					}
-				});
+		Long l = new MapReduce<Integer, Integer, Long>().reduce(Arrays
+				.asList(intArray), new Reducer<Integer, Long>() {
+			public Long reduce(Iterable<Integer> values) {
+				long sum = 0;
+				for (Integer i : values) {
+					sum += i.intValue();
+				}
+				return new Long(sum);
+			}
+		});
 		assertNotNull(l);
 		assertEquals(l.longValue(), (long) 10 + 12 + 1233 + 1234 + 123 + 903434
 				+ 245234);
@@ -50,7 +49,7 @@ public class MapReduceTestCase extends TestCase {
 		Integer[] intArray = new Integer[] { 10, 12, 1233, 1234, 123, 903434,
 				245234 };
 		List<Integer> input = Arrays.asList(intArray);
-		MapReduce mr = new MapReduce();
+		MapReduce<Integer, Integer, Integer> mr = new MapReduce<Integer, Integer, Integer>();
 		Integer sum = mr.mapReduce(input, new Mapper<Integer, Integer>() {
 			public void map(Iterable<Integer> values,
 					Collector<Integer> collector) {

@@ -3,18 +3,18 @@ package com.rubicon.data.functional;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MapReduce {
-	public <T1, T2> List<T2> map(Iterable<T1> values, Mapper<T1, T2> mapper) {
+public class MapReduce<T1, T2, T3> {
+	public List<T2> map(Iterable<T1> values, Mapper<T1, T2> mapper) {
 		SimpleCollector<T2> collector = new SimpleCollector<T2>();
 		mapper.map(values, collector);
 		return collector.values();
 	}
 
-	public <T2, T3> T3 reduce(Iterable<T2> values, Reducer<T2, T3> reducer) {
+	public T3 reduce(Iterable<T2> values, Reducer<T2, T3> reducer) {
 		return reducer.reduce(values);
 	}
 
-	public <T1, T2, T3> T3 mapReduce(Iterable<T1> values,
+	public T3 mapReduce(Iterable<T1> values,
 			Mapper<T1, T2> mapper, Reducer<T2, T3> reducer) {
 		List<T2> mapped = map(values, mapper);
 		T3 result = reduce(mapped, reducer);
