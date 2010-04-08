@@ -14,7 +14,6 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.thrift.TBase;
-import org.apache.thrift.transport.TTransportException;
 
 /**
  * InputFormat for thrift objects.
@@ -66,8 +65,6 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 
 		private ThriftCompactDeserializer<V> valueDeserializer;
 
-		private boolean hasMore = true;
-
 		private long start;
 
 		private long pos;
@@ -93,7 +90,6 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			pos = start;
 			this.keyDeserializer.open(in);
 			this.valueDeserializer.open(in);
-			hasMore = true;
 		}
 
 		public K createKey() {
@@ -125,14 +121,17 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		}
 
 		public synchronized boolean next(K key, V value) throws IOException {
+			boolean result = false;
 			try {
-				keyDeserializer.deserialize(key);
-				valueDeserializer.deserialize(value);
-				this.pos = in.getPos();
-				return true;
+				if (getPos() < end) {
+					keyDeserializer.deserialize(key);
+					valueDeserializer.deserialize(value);
+					this.pos = in.getPos();
+					result = true;
+				}
 			} catch (EOFException e) {
-				return false;
 			}
+			return result;
 		}
 
 		public synchronized void close() throws IOException {
