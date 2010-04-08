@@ -38,12 +38,6 @@ public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<
 		this.proto = new TCompactProtocol(transport);
 	}
 
-	public void close() throws IOException {
-		this.transport.close();
-		this.transport = null;
-		this.proto = null;
-	}
-
 	public T deserialize(T obj) throws IOException {
 		try {
 			if (obj == null) {
@@ -59,5 +53,11 @@ public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<
 			throw new IOException(e);
 		} finally {
 		}
+	}
+
+	public void close() throws IOException {
+		this.transport.close();
+		this.transport = null;
+		this.proto = null;
 	}
 }
