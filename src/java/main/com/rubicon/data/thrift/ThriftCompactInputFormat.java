@@ -25,17 +25,20 @@ import org.apache.thrift.TBase;
  */
 public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		FileInputFormat<K, V> {
+	private static final String KEY_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.keyclass";
 
-	private static Class keyClass;
+	private static final String VALUE_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.valueclass";
 
-	private static Class valueClass;
+	private Class<K> keyClass;
 
-	public static void setKeyClass(Class cls) {
-		keyClass = cls;
+	private Class<V> valueClass;
+
+	public static void setKeyClass(JobConf conf, Class<? extends TBase> cls) {
+		conf.set(KEY_CLASS_CONF, cls.getCanonicalName());
 	}
 
-	public static void setValueClass(Class cls) {
-		valueClass = cls;
+	public static void setValueClass(JobConf conf, Class<? extends TBase> cls) {
+		conf.set(VALUE_CLASS_CONF, cls.getCanonicalName());
 	}
 
 	@Override
@@ -47,8 +50,39 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 	public RecordReader<K, V> getRecordReader(InputSplit split, JobConf job,
 			Reporter reporter) throws IOException {
 		reporter.setStatus(split.toString());
-		return new ThriftRecordReader<K, V>(job, (FileSplit) split, keyClass,
-				valueClass);
+		return new ThriftRecordReader<K, V>(job, (FileSplit) split,
+				getKeyClass(job), getValueClass(job));
+	}
+
+	private Class<K> getKeyClass(JobConf conf) {
+		Class<K> cls = null;
+		if (keyClass != null)
+			cls = keyClass;
+		else {
+			cls = (Class<K>) getClassFromJobConf(conf, KEY_CLASS_CONF);
+			keyClass = cls;
+		}
+		return cls;
+	}
+
+	private Class<V> getValueClass(JobConf conf) {
+		Class<V> cls = null;
+		if (valueClass != null)
+			cls = valueClass;
+		else {
+			cls = (Class<V>) getClassFromJobConf(conf, VALUE_CLASS_CONF);
+			valueClass = cls;
+		}
+		return cls;
+	}
+
+	private Class<? extends TBase> getClassFromJobConf(JobConf conf,
+			String param) {
+		try {
+			return (Class<? extends TBase>) Class.forName(conf.get(param));
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static class ThriftRecordReader<K extends TBase, V extends TBase>
@@ -77,7 +111,8 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			this.keyClass = keyClass;
 			this.valueClass = valueClass;
 			this.keyDeserializer = new ThriftCompactDeserializer<K>(keyClass);
-			this.valueDeserializer = new ThriftCompactDeserializer<V>(valueClass);
+			this.valueDeserializer = new ThriftCompactDeserializer<V>(
+					valueClass);
 			init(job);
 		}
 
