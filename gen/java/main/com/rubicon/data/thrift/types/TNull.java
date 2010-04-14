@@ -5,6 +5,7 @@
  */
 package com.rubicon.data.thrift.types;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -155,7 +156,9 @@ public class TNull implements TBase<TNull._Fields>, java.io.Serializable, Clonea
 
   @Override
   public int hashCode() {
-    return 0;
+    HashCodeBuilder builder = new HashCodeBuilder();
+
+    return builder.toHashCode();
   }
 
   public int compareTo(TNull other) {

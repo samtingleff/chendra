@@ -5,6 +5,7 @@
  */
 package com.rubicon.data.thrift.types;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -238,7 +239,14 @@ public class TStringList implements TBase<TStringList._Fields>, java.io.Serializ
 
   @Override
   public int hashCode() {
-    return 0;
+    HashCodeBuilder builder = new HashCodeBuilder();
+
+    boolean present_values = true && (isSetValues());
+    builder.append(present_values);
+    if (present_values)
+      builder.append(values);
+
+    return builder.toHashCode();
   }
 
   public int compareTo(TStringList other) {
