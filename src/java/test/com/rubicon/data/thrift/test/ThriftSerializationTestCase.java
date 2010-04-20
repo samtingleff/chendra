@@ -15,8 +15,7 @@ public class ThriftSerializationTestCase extends TestCase {
 	public void testUserIdSerialization() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		UserId uid1 = new UserId(12);
-		ThriftCompactSerializer<UserId> serializer = new ThriftCompactSerializer<UserId>(
-				UserId.class);
+		ThriftCompactSerializer<UserId> serializer = new ThriftCompactSerializer<UserId>();
 		serializer.open(out);
 		serializer.serialize(uid1);
 		serializer.close();
@@ -38,8 +37,7 @@ public class ThriftSerializationTestCase extends TestCase {
 	public void testUserProfileSerialization() throws Exception {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		UserProfile user1 = new UserProfile(12, "hello", "world");
-		ThriftCompactSerializer<UserProfile> serializer = new ThriftCompactSerializer<UserProfile>(
-				UserProfile.class);
+		ThriftCompactSerializer<UserProfile> serializer = new ThriftCompactSerializer<UserProfile>();
 		serializer.open(out);
 		serializer.serialize(user1);
 		serializer.close();

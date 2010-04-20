@@ -9,10 +9,11 @@ import org.apache.thrift.TBase;
  * Serialization implementation for thrift objects.
  * 
  * @author stingleff
- *
+ * 
  * @param <T>
  */
-public class ThriftCompactSerialization<T extends TBase> implements Serialization<T> {
+public class ThriftCompactSerialization<T extends TBase> implements
+		Serialization<T> {
 
 	public boolean accept(Class<?> cls) {
 		Class[] interfaces = cls.getInterfaces();
@@ -28,7 +29,7 @@ public class ThriftCompactSerialization<T extends TBase> implements Serializatio
 	}
 
 	public Serializer<T> getSerializer(Class<T> cls) {
-		return new ThriftCompactSerializer<T>(cls);
+		return new ThriftCompactSerializer<T>();
 	}
 
 }

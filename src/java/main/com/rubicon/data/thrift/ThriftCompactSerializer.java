@@ -15,12 +15,10 @@ import org.apache.thrift.transport.TTransport;
  * Serializer for thrift objects.
  * 
  * @author stingleff
- *
+ * 
  * @param <T>
  */
 public class ThriftCompactSerializer<T extends TBase> implements Serializer<T> {
-
-	private Class<T> cls;
 
 	private OutputStream out;
 
@@ -28,8 +26,7 @@ public class ThriftCompactSerializer<T extends TBase> implements Serializer<T> {
 
 	private TProtocol proto;
 
-	public ThriftCompactSerializer(Class<T> cls) {
-		this.cls = cls;
+	public ThriftCompactSerializer() {
 	}
 
 	public void open(OutputStream out) throws IOException {

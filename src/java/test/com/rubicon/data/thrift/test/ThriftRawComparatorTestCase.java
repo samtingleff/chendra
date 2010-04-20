@@ -75,8 +75,7 @@ public class ThriftRawComparatorTestCase extends TestCase {
 	private <T extends TBase> SerializedResult serialize(Class cls, T obj1,
 			T obj2) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		ThriftCompactSerializer<T> serializer = new ThriftCompactSerializer<T>(
-				cls);
+		ThriftCompactSerializer<T> serializer = new ThriftCompactSerializer<T>();
 		serializer.open(out);
 		int s1 = out.size();
 		serializer.serialize(obj1);
