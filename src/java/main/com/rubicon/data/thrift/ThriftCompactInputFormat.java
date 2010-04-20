@@ -25,9 +25,9 @@ import org.apache.thrift.TBase;
  */
 public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		FileInputFormat<K, V> {
-	private static final String KEY_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.keyclass";
+	public static final String KEY_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.keyclass";
 
-	private static final String VALUE_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.valueclass";
+	public static final String VALUE_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.valueclass";
 
 	private Class<K> keyClass;
 
