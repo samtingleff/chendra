@@ -5,11 +5,9 @@ import java.io.IOException;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordWriter;
-import org.apache.hadoop.mapred.Reporter;
-import org.apache.hadoop.util.Progressable;
+import org.apache.hadoop.mapreduce.RecordWriter;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.thrift.TBase;
 
 /**
@@ -24,16 +22,16 @@ public class ThriftCompactOutputFormat<K extends TBase, V extends TBase>
 		extends FileOutputFormat<K, V> {
 
 	@Override
-	public RecordWriter<K, V> getRecordWriter(FileSystem fs, JobConf job,
-			String name, Progressable progress) throws IOException {
-		Path parent = super.getOutputPath(job);
-		Path path = new Path(parent, name);
-		FSDataOutputStream out = fs.create(path);
-		return new ThriftRecordWriter(out);
+	public RecordWriter<K, V> getRecordWriter(TaskAttemptContext context)
+			throws IOException, InterruptedException {
+		Path path = super.getDefaultWorkFile(context, ".data");
+		FileSystem fs = path.getFileSystem(context.getConfiguration());
+		FSDataOutputStream out = fs.create(path, false);
+		return new ThriftRecordWriter<K, V>(out);
 	}
 
 	private static class ThriftRecordWriter<K extends TBase, V extends TBase>
-			implements RecordWriter<K, V> {
+			extends RecordWriter<K, V> {
 
 		private ThriftCompactSerializer<K> keySerializer = new ThriftCompactSerializer<K>();
 
@@ -47,15 +45,16 @@ public class ThriftCompactOutputFormat<K extends TBase, V extends TBase>
 			this.valueSerializer.open(out);
 		}
 
-		public void close(Reporter reporter) throws IOException {
-			this.keySerializer.close();
-			this.valueSerializer.close();
-			this.out.close();
-		}
-
 		public void write(K key, V value) throws IOException {
 			this.keySerializer.serialize(key);
 			this.valueSerializer.serialize(value);
+		}
+
+		public void close(TaskAttemptContext context) throws IOException,
+				InterruptedException {
+			this.keySerializer.close();
+			this.valueSerializer.close();
+			this.out.close();
 		}
 
 	}

@@ -7,12 +7,12 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.JobContext;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.thrift.TBase;
 
 /**
@@ -33,51 +33,55 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 
 	private Class<V> valueClass;
 
-	public static void setKeyClass(JobConf conf, Class<? extends TBase> cls) {
+	public static void setKeyClass(Configuration conf,
+			Class<? extends TBase> cls) {
 		conf.set(KEY_CLASS_CONF, cls.getCanonicalName());
 	}
 
-	public static void setValueClass(JobConf conf, Class<? extends TBase> cls) {
+	public static void setValueClass(Configuration conf,
+			Class<? extends TBase> cls) {
 		conf.set(VALUE_CLASS_CONF, cls.getCanonicalName());
 	}
 
 	@Override
-	protected boolean isSplitable(FileSystem fs, Path filename) {
+	protected boolean isSplitable(JobContext context, Path filename) {
 		return false;
 	}
 
 	@Override
-	public RecordReader<K, V> getRecordReader(InputSplit split, JobConf job,
-			Reporter reporter) throws IOException {
-		reporter.setStatus(split.toString());
-		return new ThriftRecordReader<K, V>(job, (FileSplit) split,
-				getKeyClass(job), getValueClass(job));
+	public RecordReader<K, V> createRecordReader(InputSplit split,
+			TaskAttemptContext context) throws IOException,
+			InterruptedException {
+		Configuration conf = context.getConfiguration();
+		return new ThriftRecordReader<K, V>(conf, (FileSplit) split,
+				getKeyClass(conf), getValueClass(conf));
+
 	}
 
-	private Class<K> getKeyClass(JobConf conf) {
+	private Class<K> getKeyClass(Configuration conf) {
 		Class<K> cls = null;
 		if (keyClass != null)
 			cls = keyClass;
 		else {
-			cls = (Class<K>) getClassFromJobConf(conf, KEY_CLASS_CONF);
+			cls = (Class<K>) getClassFromConfiguration(conf, KEY_CLASS_CONF);
 			keyClass = cls;
 		}
 		return cls;
 	}
 
-	private Class<V> getValueClass(JobConf conf) {
+	private Class<V> getValueClass(Configuration conf) {
 		Class<V> cls = null;
 		if (valueClass != null)
 			cls = valueClass;
 		else {
-			cls = (Class<V>) getClassFromJobConf(conf, VALUE_CLASS_CONF);
+			cls = (Class<V>) getClassFromConfiguration(conf, VALUE_CLASS_CONF);
 			valueClass = cls;
 		}
 		return cls;
 	}
 
-	private Class<? extends TBase> getClassFromJobConf(JobConf conf,
-			String param) {
+	private Class<? extends TBase> getClassFromConfiguration(
+			Configuration conf, String param) {
 		try {
 			return (Class<? extends TBase>) Class.forName(conf.get(param));
 		} catch (ClassNotFoundException e) {
@@ -86,7 +90,7 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 	}
 
 	private static class ThriftRecordReader<K extends TBase, V extends TBase>
-			implements RecordReader<K, V> {
+			extends RecordReader<K, V> {
 		private FileSplit split;
 
 		private Class<K> keyClass;
@@ -98,6 +102,10 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		private ThriftCompactDeserializer<K> keyDeserializer;
 
 		private ThriftCompactDeserializer<V> valueDeserializer;
+
+		private K key;
+
+		private V value;
 
 		private long start;
 
@@ -113,34 +121,19 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			this.keyDeserializer = new ThriftCompactDeserializer<K>(keyClass);
 			this.valueDeserializer = new ThriftCompactDeserializer<V>(
 					valueClass);
-			init(job);
 		}
 
-		private void init(Configuration job) throws IOException {
+		@Override
+		public void initialize(InputSplit genericSplit,
+				TaskAttemptContext context) throws IOException {
 			Path path = split.getPath();
-			FileSystem fs = path.getFileSystem(job);
+			FileSystem fs = path.getFileSystem(context.getConfiguration());
 			this.in = fs.open(path);
 			start = split.getStart();
 			end = start + split.getLength();
 			pos = start;
 			this.keyDeserializer.open(in);
 			this.valueDeserializer.open(in);
-		}
-
-		public K createKey() {
-			try {
-				return keyClass.newInstance();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		public V createValue() {
-			try {
-				return valueClass.newInstance();
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
 		}
 
 		public synchronized long getPos() throws IOException {
@@ -155,10 +148,12 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			}
 		}
 
-		public synchronized boolean next(K key, V value) throws IOException {
+		public boolean nextKeyValue() throws IOException, InterruptedException {
 			boolean result = false;
 			try {
 				if (getPos() < end) {
+					key = createKey();
+					value = createValue();
 					keyDeserializer.deserialize(key);
 					valueDeserializer.deserialize(value);
 					this.pos = in.getPos();
@@ -169,10 +164,36 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			return result;
 		}
 
+		@Override
+		public K getCurrentKey() throws IOException, InterruptedException {
+			return key;
+		}
+
+		@Override
+		public V getCurrentValue() throws IOException, InterruptedException {
+			return value;
+		}
+
 		public synchronized void close() throws IOException {
 			this.keyDeserializer.close();
 			this.valueDeserializer.close();
 			this.in.close();
+		}
+
+		private K createKey() {
+			try {
+				return keyClass.newInstance();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		private V createValue() {
+			try {
+				return valueClass.newInstance();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 	}
