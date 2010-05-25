@@ -32,6 +32,9 @@ public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<
 		this.cls = cls;
 	}
 
+	public ThriftCompactDeserializer() {
+	}
+
 	public void open(InputStream in) throws IOException {
 		this.in = in;
 		this.transport = new TIOStreamTransport(in);
