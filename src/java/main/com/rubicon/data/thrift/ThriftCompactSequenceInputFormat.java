@@ -95,9 +95,9 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 
 		private ThriftCompactDeserializer dataDeserializer = new ThriftCompactDeserializer();
 
-		private KeyPackage next;
+		private KeyPackage currentKey;
 
-		private long valuesReleased = 0l;
+		private KeyPackage nextKey;
 
 		private V value = null;
 
@@ -129,33 +129,35 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 			this.indexDeserializer.open(this.index);
 
 			this.pos = start;
-
-			this.next = readKeyPackage(this.indexDeserializer);
 		}
 
 		@Override
 		public boolean nextKeyValue() throws IOException, InterruptedException {
-			boolean result = true;
-			if (valuesReleased == next.getCount()) {
-				this.next = readKeyPackage(this.indexDeserializer);
-				this.valuesReleased = 0l;
-				if ((this.next.getKeyClass().equals(TNull.class))
-						&& (this.next.getValuesClass().equals(TNull.class))
-						&& (this.next.getCount() == 0l))
-					result = false;
+			if (this.currentKey == null) {
+				this.currentKey = readKeyPackage(this.indexDeserializer);
 			}
+			boolean result = hasValues(this.currentKey);
 			if (result) {
-				this.value = readValue(this.dataDeserializer, next
-						.getValuesClass());
-				this.pos = this.data.getPos();
-				++this.valuesReleased;
+				if (this.nextKey == null)
+					this.nextKey = readKeyPackage(indexDeserializer);
+
+				// am i at end of line for this key series?
+				if (this.data.getPos() >= this.nextKey.getPos()) {
+					this.currentKey = this.nextKey;
+					result = hasValues(this.currentKey);
+					if (result)
+						this.nextKey = readKeyPackage(indexDeserializer);
+				}
+				if (result)
+					this.value = readValue(this.dataDeserializer,
+							this.currentKey.getValuesClass());
 			}
 			return result;
 		}
 
 		@Override
 		public K getCurrentKey() throws IOException, InterruptedException {
-			return (K) this.next.getKey();
+			return (K) this.currentKey.getKey();
 		}
 
 		@Override
@@ -180,6 +182,12 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 			this.data.close();
 		}
 
+		private boolean hasValues(KeyPackage kp) {
+			return ((kp.getKeyClass().equals(TNull.class))
+					&& (kp.getValuesClass().equals(TNull.class)) && (kp
+					.getPos() == 0l)) ? false : true;
+		}
+
 		private KeyPackage readKeyPackage(ThriftCompactDeserializer deserializer)
 				throws IOException {
 			try {
@@ -192,8 +200,8 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 				Class<? extends V> valueClass = (Class<? extends V>) Class
 						.forName(valueClassName.getValue());
 				K k = (K) deserializer.deserialize(keyClass.newInstance());
-				TLong count = (TLong) deserializer.deserialize(new TLong());
-				return new KeyPackage(keyClass, valueClass, k, count.getValue());
+				TLong pos = (TLong) deserializer.deserialize(new TLong());
+				return new KeyPackage(keyClass, valueClass, k, pos.getValue());
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -215,14 +223,14 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 
 			private Object key;
 
-			private long count;
+			private long pos;
 
 			public KeyPackage(Class keyClass, Class valuesClass, Object key,
-					long count) {
+					long pos) {
 				this.keyClass = keyClass;
 				this.valuesClass = valuesClass;
 				this.key = key;
-				this.count = count;
+				this.pos = pos;
 			}
 
 			public Class getKeyClass() {
@@ -237,8 +245,12 @@ public class ThriftCompactSequenceInputFormat<K extends TBase, V extends TBase>
 				return key;
 			}
 
-			public long getCount() {
-				return count;
+			public long getPos() {
+				return pos;
+			}
+
+			public String toString() {
+				return key.toString() + ":" + getPos();
 			}
 		}
 	}

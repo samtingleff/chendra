@@ -2,7 +2,6 @@ package com.rubicon.data.thrift;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -30,31 +29,34 @@ public class ThriftCompactSequenceOutputFormat<K extends TBase, V extends TBase>
 		FileSystem fs = file.getFileSystem(conf);
 		FSDataOutputStream indexOut = fs.create(indexFile, false);
 		FSDataOutputStream fileOut = fs.create(file, false);
-		return new BlobRecordWriter<K, V>(new DataOutputStream(indexOut),
-				fileOut);
+		return new BlobRecordWriter<K, V>(indexOut, fileOut);
 	}
 
 	private static class BlobRecordWriter<K extends TBase, V extends TBase>
 			extends RecordWriter<K, V> {
 
-		private OutputStream index;
+		private FSDataOutputStream indexFS;
+
+		private DataOutputStream indexOut;
 
 		private ThriftCompactSerializer indexSerializer = new ThriftCompactSerializer();
 
-		private OutputStream data;
+		private FSDataOutputStream dataFS;
+
+		private DataOutputStream dataOut;
 
 		private ThriftCompactSerializer dataSerializer = new ThriftCompactSerializer();
 
-		private long lastKeyCount = 0;
-
 		private K lastKey = null;
 
-		public BlobRecordWriter(OutputStream index, OutputStream data)
-				throws IOException {
-			this.index = index;
-			this.data = data;
-			indexSerializer.open(index);
-			dataSerializer.open(data);
+		public BlobRecordWriter(FSDataOutputStream indexFS,
+				FSDataOutputStream dataFS) throws IOException {
+			this.indexFS = indexFS;
+			this.indexOut = new DataOutputStream(indexFS);
+			this.dataFS = dataFS;
+			this.dataOut = new DataOutputStream(dataFS);
+			indexSerializer.open(indexOut);
+			dataSerializer.open(dataOut);
 			indexBegin();
 		}
 
@@ -65,13 +67,11 @@ public class ThriftCompactSequenceOutputFormat<K extends TBase, V extends TBase>
 			else if (!lastKey.equals(k)) {
 				indexKeyEnd();
 				indexKeyBegin(k, v);
-				lastKeyCount = 0;
 			}
 
 			dataSerializer.serialize(v);
 
 			lastKey = k;
-			++lastKeyCount;
 		}
 
 		@Override
@@ -80,33 +80,34 @@ public class ThriftCompactSequenceOutputFormat<K extends TBase, V extends TBase>
 			indexKeyEnd();
 			indexEnd();
 			dataSerializer.close();
-			data.close();
+			dataOut.close();
+			dataFS.close();
 			indexSerializer.close();
-			index.close();
+			indexOut.close();
+			indexFS.close();
 		}
 
 		private void indexBegin() throws IOException {
 		}
 
 		private void indexEnd() throws IOException {
-			indexSerializer.serialize(new TString(TNull.class
-					.getCanonicalName()));
-			indexSerializer.serialize(new TString(TNull.class
-					.getCanonicalName()));
-			indexSerializer.serialize(new TNull());
-			indexSerializer.serialize(new TLong(0l));
+			indexWriteRecord(TNull.class, TNull.class, new TNull(), 0l);
 		}
 
 		private void indexKeyBegin(K k, V v) throws IOException {
-			indexSerializer.serialize(new TString(k.getClass()
-					.getCanonicalName()));
-			indexSerializer.serialize(new TString(v.getClass()
-					.getCanonicalName()));
-			indexSerializer.serialize(k);
+			indexWriteRecord(k.getClass(), v.getClass(), k, dataFS.getPos());
 		}
 
 		private void indexKeyEnd() throws IOException {
-			indexSerializer.serialize(new TLong(lastKeyCount));
+		}
+
+		private <Z extends TBase> void indexWriteRecord(Class keyClass,
+				Class valueClass, Z k, long pos) throws IOException {
+			indexSerializer.serialize(new TString(keyClass.getCanonicalName()));
+			indexSerializer
+					.serialize(new TString(valueClass.getCanonicalName()));
+			indexSerializer.serialize(k);
+			indexSerializer.serialize(new TLong(pos));
 		}
 	}
 }
