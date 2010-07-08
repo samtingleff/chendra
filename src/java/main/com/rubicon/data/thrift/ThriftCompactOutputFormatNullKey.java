@@ -23,36 +23,17 @@ import com.rubicon.data.thrift.types.TNull;
 public class ThriftCompactOutputFormatNullKey<V extends TBase> extends
 		FileOutputFormat<TNull, V> {
 
+	public FSDataOutputStream getOutputStream(TaskAttemptContext context)
+			throws IOException {
+		Path path = getDefaultWorkFile(context, ".data");
+		FileSystem fs = path.getFileSystem(context.getConfiguration());
+		FSDataOutputStream out = fs.create(path, false);
+		return out;
+	}
+
 	@Override
 	public RecordWriter<TNull, V> getRecordWriter(TaskAttemptContext context)
 			throws IOException, InterruptedException {
-		Path path = super.getDefaultWorkFile(context, ".data");
-		FileSystem fs = path.getFileSystem(context.getConfiguration());
-		FSDataOutputStream out = fs.create(path, false);
-		return new ThriftRecordWriterNullKey<V>(out);
-	}
-
-	private static class ThriftRecordWriterNullKey<V extends TBase> extends
-			RecordWriter<TNull, V> {
-		private ThriftCompactSerializer<V> serializer = new ThriftCompactSerializer<V>();
-
-		private FSDataOutputStream out;
-
-		private ThriftRecordWriterNullKey(FSDataOutputStream out)
-				throws IOException {
-			this.out = out;
-			this.serializer.open(out);
-		}
-
-		public void write(TNull key, V value) throws IOException {
-			this.serializer.serialize(value);
-		}
-
-		public void close(TaskAttemptContext context) throws IOException,
-				InterruptedException {
-			this.serializer.close();
-			this.out.close();
-		}
-
+		return new ThriftCompactRecordWriterNullKey<V>(getOutputStream(context));
 	}
 }
