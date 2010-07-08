@@ -24,7 +24,7 @@ public class ThriftCompactOutputFormat<K extends TBase, V extends TBase>
 	@Override
 	public RecordWriter<K, V> getRecordWriter(TaskAttemptContext context)
 			throws IOException, InterruptedException {
-		Path path = super.getDefaultWorkFile(context, ".data");
+		Path path = getDefaultWorkFile(context, ".data");
 		FileSystem fs = path.getFileSystem(context.getConfiguration());
 		FSDataOutputStream out = fs.create(path, false);
 		return new ThriftRecordWriter<K, V>(out);
