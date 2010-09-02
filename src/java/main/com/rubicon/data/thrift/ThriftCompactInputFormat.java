@@ -25,22 +25,18 @@ import org.apache.thrift.TBase;
  */
 public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		FileInputFormat<K, V> {
-	public static final String KEY_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.keyclass";
-
-	public static final String VALUE_CLASS_CONF = "rp.mapred.thrift.compact.inputformat.valueclass";
-
 	private Class<K> keyClass;
 
 	private Class<V> valueClass;
 
 	public static void setKeyClass(Configuration conf,
 			Class<? extends TBase> cls) {
-		conf.set(KEY_CLASS_CONF, cls.getCanonicalName());
+		conf.set(Constants.KEY_CLASS, cls.getCanonicalName());
 	}
 
 	public static void setValueClass(Configuration conf,
 			Class<? extends TBase> cls) {
-		conf.set(VALUE_CLASS_CONF, cls.getCanonicalName());
+		conf.set(Constants.VALUE_CLASS, cls.getCanonicalName());
 	}
 
 	@Override
@@ -63,7 +59,7 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		if (keyClass != null)
 			cls = keyClass;
 		else {
-			cls = (Class<K>) getClassFromConfiguration(conf, KEY_CLASS_CONF);
+			cls = (Class<K>) ReflectionHelper.getClassFromConfiguration(conf, Constants.KEY_CLASS);
 			keyClass = cls;
 		}
 		return cls;
@@ -74,19 +70,10 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		if (valueClass != null)
 			cls = valueClass;
 		else {
-			cls = (Class<V>) getClassFromConfiguration(conf, VALUE_CLASS_CONF);
+			cls = (Class<V>) ReflectionHelper.getClassFromConfiguration(conf, Constants.VALUE_CLASS);
 			valueClass = cls;
 		}
 		return cls;
-	}
-
-	private Class<? extends TBase> getClassFromConfiguration(
-			Configuration conf, String param) {
-		try {
-			return (Class<? extends TBase>) Class.forName(conf.get(param));
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private static class ThriftRecordReader<K extends TBase, V extends TBase>
