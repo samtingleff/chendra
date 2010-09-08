@@ -54,7 +54,7 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 
 	}
 
-	private Class<K> getKeyClass(Configuration conf) {
+	protected Class<K> getKeyClass(Configuration conf) {
 		Class<K> cls = null;
 		if (keyClass != null)
 			cls = keyClass;
@@ -65,7 +65,7 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		return cls;
 	}
 
-	private Class<V> getValueClass(Configuration conf) {
+	protected Class<V> getValueClass(Configuration conf) {
 		Class<V> cls = null;
 		if (valueClass != null)
 			cls = valueClass;
@@ -76,7 +76,7 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		return cls;
 	}
 
-	private static class ThriftRecordReader<K extends TBase, V extends TBase>
+	protected static class ThriftRecordReader<K extends TBase, V extends TBase>
 			extends RecordReader<K, V> {
 		private FileSplit split;
 
