@@ -7,3 +7,7 @@ struct TStringMap {
 struct TIntegerMap {
  1: map<i32, i32> values
 }
+
+struct TDoubleMap {
+ 1: map<string, double> values
+}
