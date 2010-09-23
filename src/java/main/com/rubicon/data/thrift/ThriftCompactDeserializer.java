@@ -1,5 +1,6 @@
 package com.rubicon.data.thrift;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,7 +19,7 @@ import org.apache.thrift.transport.TTransport;
  *
  * @param <T>
  */
-public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<T> {
+public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<T>, Closeable {
 
 	private Class<T> cls;
 
