@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.apache.hadoop.io.serializer.Serializer;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TCompactProtocol;
@@ -19,7 +18,7 @@ import org.apache.thrift.transport.TTransport;
  * 
  * @param <T>
  */
-public class ThriftCompactSerializer<T extends TBase> implements Serializer<T>, Closeable {
+public class ThriftCompactSerializer<T extends TBase> implements Closeable {
 
 	private OutputStream out;
 

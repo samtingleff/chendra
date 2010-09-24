@@ -25,11 +25,11 @@ public class ThriftCompactSerialization<T extends TBase> implements
 	}
 
 	public Deserializer<T> getDeserializer(Class<T> cls) {
-		return new ThriftCompactDeserializer<T>(cls);
+		return new HThriftCompactDeserializer<T>(cls);
 	}
 
 	public Serializer<T> getSerializer(Class<T> cls) {
-		return new ThriftCompactSerializer<T>();
+		return new HThriftCompactSerializer<T>();
 	}
 
 }

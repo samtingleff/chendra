@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.hadoop.io.serializer.Deserializer;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TCompactProtocol;
@@ -16,10 +15,10 @@ import org.apache.thrift.transport.TTransport;
  * Deserializer for thrift objects.
  * 
  * @author stingleff
- *
+ * 
  * @param <T>
  */
-public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<T>, Closeable {
+public class ThriftCompactDeserializer<T extends TBase> implements Closeable {
 
 	private Class<T> cls;
 
@@ -28,6 +27,12 @@ public class ThriftCompactDeserializer<T extends TBase> implements Deserializer<
 	private TTransport transport;
 
 	private TProtocol proto;
+
+	public ThriftCompactDeserializer(Class<T> cls, InputStream in)
+			throws IOException {
+		this.cls = cls;
+		open(in);
+	}
 
 	public ThriftCompactDeserializer(Class<T> cls) {
 		this.cls = cls;
