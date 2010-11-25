@@ -11,3 +11,7 @@ struct TIntegerMap {
 struct TDoubleMap {
  1: map<string, double> values
 }
+
+struct TStringIntegerMap {
+ 1: map<string, i32> values
+}
