@@ -30,7 +30,7 @@
 		<copy todir="${build.path}" overwrite="true">
 			<fileset dir="${src.main.path}" includes="**/*.properties,**/*.xml,**/*.vm"/>
 		</copy>
-		<javac destdir="${build.path}" target="1.5" debug="${debug}" 
+		<javac destdir="${build.path}" target="1.6" debug="${debug}" 
 			classpathref="compile.classpath">
 			<src path="${src.main.gen.path}/" />
 			<src path="${src.main.path}/" />

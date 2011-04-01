@@ -7,12 +7,12 @@
 	<classpathentry kind="src" path="src/thrift"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit-4.0.jar"/>
-	<classpathentry kind="lib" path="lib/thrift-svn-920994.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.5.8.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="var" path="HADOOP_HOME/hadoop-0.20.2-core.jar"/>
+	<classpathentry kind="lib" path="lib/libthrift-0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

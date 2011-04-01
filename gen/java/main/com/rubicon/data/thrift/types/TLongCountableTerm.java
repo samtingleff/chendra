@@ -16,34 +16,29 @@ import java.util.HashSet;
 import java.util.EnumSet;
 import java.util.Collections;
 import java.util.BitSet;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.apache.thrift.*;
-import org.apache.thrift.meta_data.*;
-import org.apache.thrift.protocol.*;
+public class TLongCountableTerm implements org.apache.thrift.TBase<TLongCountableTerm, TLongCountableTerm._Fields>, java.io.Serializable, Cloneable {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("TLongCountableTerm");
 
-public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, java.io.Serializable, Cloneable, Comparable<TLongCountableTerm> {
-  private static final TStruct STRUCT_DESC = new TStruct("TLongCountableTerm");
-
-  private static final TField TERM_FIELD_DESC = new TField("term", TType.STRING, (short)1);
-  private static final TField COUNT_FIELD_DESC = new TField("count", TType.I64, (short)2);
+  private static final org.apache.thrift.protocol.TField TERM_FIELD_DESC = new org.apache.thrift.protocol.TField("term", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("count", org.apache.thrift.protocol.TType.I64, (short)2);
 
   private String term;
   private long count;
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-  public enum _Fields implements TFieldIdEnum {
+  public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TERM((short)1, "term"),
     COUNT((short)2, "count");
 
-    private static final Map<Integer, _Fields> byId = new HashMap<Integer, _Fields>();
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
     static {
       for (_Fields field : EnumSet.allOf(_Fields.class)) {
-        byId.put((int)field._thriftId, field);
         byName.put(field.getFieldName(), field);
       }
     }
@@ -52,7 +47,14 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
      * Find the _Fields constant that matches fieldId, or null if its not found.
      */
     public static _Fields findByThriftId(int fieldId) {
-      return byId.get(fieldId);
+      switch(fieldId) {
+        case 1: // TERM
+          return TERM;
+        case 2: // COUNT
+          return COUNT;
+        default:
+          return null;
+      }
     }
 
     /**
@@ -93,15 +95,15 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
   private static final int __COUNT_ISSET_ID = 0;
   private BitSet __isset_bit_vector = new BitSet(1);
 
-  public static final Map<_Fields, FieldMetaData> metaDataMap = Collections.unmodifiableMap(new EnumMap<_Fields, FieldMetaData>(_Fields.class) {{
-    put(_Fields.TERM, new FieldMetaData("term", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.STRING)));
-    put(_Fields.COUNT, new FieldMetaData("count", TFieldRequirementType.DEFAULT, 
-        new FieldValueMetaData(TType.I64)));
-  }});
-
+  public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
-    FieldMetaData.addStructMetaDataMap(TLongCountableTerm.class, metaDataMap);
+    Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+    tmpMap.put(_Fields.TERM, new org.apache.thrift.meta_data.FieldMetaData("term", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.COUNT, new org.apache.thrift.meta_data.FieldMetaData("count", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+    metaDataMap = Collections.unmodifiableMap(tmpMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TLongCountableTerm.class, metaDataMap);
   }
 
   public TLongCountableTerm() {
@@ -133,25 +135,26 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     return new TLongCountableTerm(this);
   }
 
-  @Deprecated
-  public TLongCountableTerm clone() {
-    return new TLongCountableTerm(this);
+  @Override
+  public void clear() {
+    this.term = null;
+    setCountIsSet(false);
+    this.count = 0;
   }
 
   public String getTerm() {
     return this.term;
   }
 
-  public TLongCountableTerm setTerm(String term) {
+  public void setTerm(String term) {
     this.term = term;
-    return this;
   }
 
   public void unsetTerm() {
     this.term = null;
   }
 
-  /** Returns true if field term is set (has been asigned a value) and false otherwise */
+  /** Returns true if field term is set (has been assigned a value) and false otherwise */
   public boolean isSetTerm() {
     return this.term != null;
   }
@@ -166,17 +169,16 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     return this.count;
   }
 
-  public TLongCountableTerm setCount(long count) {
+  public void setCount(long count) {
     this.count = count;
     setCountIsSet(true);
-    return this;
   }
 
   public void unsetCount() {
     __isset_bit_vector.clear(__COUNT_ISSET_ID);
   }
 
-  /** Returns true if field count is set (has been asigned a value) and false otherwise */
+  /** Returns true if field count is set (has been assigned a value) and false otherwise */
   public boolean isSetCount() {
     return __isset_bit_vector.get(__COUNT_ISSET_ID);
   }
@@ -206,10 +208,6 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     }
   }
 
-  public void setFieldValue(int fieldID, Object value) {
-    setFieldValue(_Fields.findByThriftIdOrThrow(fieldID), value);
-  }
-
   public Object getFieldValue(_Fields field) {
     switch (field) {
     case TERM:
@@ -222,12 +220,12 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     throw new IllegalStateException();
   }
 
-  public Object getFieldValue(int fieldId) {
-    return getFieldValue(_Fields.findByThriftIdOrThrow(fieldId));
-  }
-
-  /** Returns true if field corresponding to fieldID is set (has been asigned a value) and false otherwise */
+  /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
   public boolean isSet(_Fields field) {
+    if (field == null) {
+      throw new IllegalArgumentException();
+    }
+
     switch (field) {
     case TERM:
       return isSetTerm();
@@ -235,10 +233,6 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
       return isSetCount();
     }
     throw new IllegalStateException();
-  }
-
-  public boolean isSet(int fieldID) {
-    return isSet(_Fields.findByThriftIdOrThrow(fieldID));
   }
 
   @Override
@@ -304,7 +298,8 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetTerm()) {      lastComparison = TBaseHelper.compareTo(term, typedOther.term);
+    if (isSetTerm()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.term, typedOther.term);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -313,7 +308,8 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetCount()) {      lastComparison = TBaseHelper.compareTo(count, typedOther.count);
+    if (isSetCount()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.count, typedOther.count);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -321,33 +317,37 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     return 0;
   }
 
-  public void read(TProtocol iprot) throws TException {
-    TField field;
+  public _Fields fieldForId(int fieldId) {
+    return _Fields.findByThriftId(fieldId);
+  }
+
+  public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+    org.apache.thrift.protocol.TField field;
     iprot.readStructBegin();
     while (true)
     {
       field = iprot.readFieldBegin();
-      if (field.type == TType.STOP) { 
+      if (field.type == org.apache.thrift.protocol.TType.STOP) { 
         break;
       }
       switch (field.id) {
         case 1: // TERM
-          if (field.type == TType.STRING) {
+          if (field.type == org.apache.thrift.protocol.TType.STRING) {
             this.term = iprot.readString();
           } else { 
-            TProtocolUtil.skip(iprot, field.type);
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
           }
           break;
         case 2: // COUNT
-          if (field.type == TType.I64) {
+          if (field.type == org.apache.thrift.protocol.TType.I64) {
             this.count = iprot.readI64();
             setCountIsSet(true);
           } else { 
-            TProtocolUtil.skip(iprot, field.type);
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
           }
           break;
         default:
-          TProtocolUtil.skip(iprot, field.type);
+          org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
       }
       iprot.readFieldEnd();
     }
@@ -355,7 +355,7 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     validate();
   }
 
-  public void write(TProtocol oprot) throws TException {
+  public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     validate();
 
     oprot.writeStructBegin(STRUCT_DESC);
@@ -391,8 +391,26 @@ public class TLongCountableTerm implements TBase<TLongCountableTerm._Fields>, ja
     return sb.toString();
   }
 
-  public void validate() throws TException {
+  public void validate() throws org.apache.thrift.TException {
     // check for required fields
+  }
+
+  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+    try {
+      write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+    } catch (org.apache.thrift.TException te) {
+      throw new java.io.IOException(te);
+    }
+  }
+
+  private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+    try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bit_vector = new BitSet(1);
+      read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+    } catch (org.apache.thrift.TException te) {
+      throw new java.io.IOException(te);
+    }
   }
 
 }

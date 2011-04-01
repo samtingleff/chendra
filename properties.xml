@@ -21,4 +21,6 @@
 <path id="compile.classpath">
 	<fileset dir="${lib.path}" includes="*.jar"/>
 	<fileset dir="${hadoop.home}" includes="${hadoop.core.jar}"/>
+	<fileset dir="${hive.build.dir}" includes="${hive.serde.jar}"/>
+	<fileset dir="${hive.build.dir}" includes="${hive.ql.jar}"/>
 </path>
