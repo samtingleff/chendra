@@ -10,6 +10,7 @@ import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TIOStreamTransport;
 import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
 
 /**
  * Deserializer for thrift objects.
@@ -47,7 +48,7 @@ public class ThriftCompactDeserializer<T extends TBase> implements Closeable {
 		this.proto = new TCompactProtocol(transport);
 	}
 
-	public T deserialize(T obj) throws IOException {
+	public T deserialize(T obj) throws IOException, TTransportException {
 		try {
 			if (obj == null) {
 				obj = cls.newInstance();

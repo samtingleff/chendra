@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import org.apache.hadoop.io.serializer.Deserializer;
 import org.apache.thrift.TBase;
+import org.apache.thrift.transport.TTransportException;
 
 public class HThriftCompactDeserializer<T extends TBase> implements
 		Deserializer<T>, Closeable {
@@ -20,7 +21,11 @@ public class HThriftCompactDeserializer<T extends TBase> implements
 	}
 
 	public T deserialize(T obj) throws IOException {
-		return delegate.deserialize(obj);
+		try {
+			return delegate.deserialize(obj);
+		} catch (TTransportException e) {
+			throw new IOException(e);
+		}
 	}
 
 	public void close() throws IOException {

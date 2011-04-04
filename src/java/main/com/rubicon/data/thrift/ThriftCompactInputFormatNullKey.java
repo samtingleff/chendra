@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.thrift.TBase;
+import org.apache.thrift.transport.TTransportException;
 
 import com.rubicon.data.thrift.types.TNull;
 
@@ -129,7 +130,19 @@ public class ThriftCompactInputFormatNullKey<V extends TBase> extends
 					this.pos = in.getPos();
 					result = true;
 				}
+			} catch (TTransportException e) {
+				if (e.getType() != TTransportException.END_OF_FILE) {
+					throw new IOException(e);
+				}
 			} catch (EOFException e) {
+			} catch (IOException e) {
+				Throwable cause = e.getCause();
+				if ((cause != null) && (cause instanceof TTransportException)) {
+					TTransportException tt = (TTransportException) cause;
+					if (tt.getType() != TTransportException.END_OF_FILE)
+						throw e;
+				} else
+					throw e;
 			}
 			return result;
 		}

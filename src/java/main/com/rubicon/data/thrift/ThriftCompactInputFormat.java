@@ -1,6 +1,5 @@
 package com.rubicon.data.thrift;
 
-import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +17,7 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.thrift.TBase;
+import org.apache.thrift.transport.TTransportException;
 
 /**
  * InputFormat for thrift objects.
@@ -144,10 +144,6 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 			this.valueDeserializer.open(this.inputStream);
 		}
 
-		public synchronized long getPos() throws IOException {
-			return pos;
-		}
-
 		public float getProgress() throws IOException {
 			if (start == end) {
 				return 0.0f;
@@ -159,15 +155,27 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		public boolean nextKeyValue() throws IOException, InterruptedException {
 			boolean result = false;
 			try {
-				if (getPos() < end) {
+				if (this.inputStream.available() > 0) {
 					key = createKey();
 					value = createValue();
 					keyDeserializer.deserialize(key);
 					valueDeserializer.deserialize(value);
-					this.pos = in.getPos();
+					this.pos = this.in.getPos();
 					result = true;
 				}
+			} catch (TTransportException e) {
+				if (e.getType() != TTransportException.END_OF_FILE) {
+					throw new IOException(e);
+				}
 			} catch (EOFException e) {
+			} catch (IOException e) {
+				Throwable cause = e.getCause();
+				if ((cause != null) && (cause instanceof TTransportException)) {
+					TTransportException tt = (TTransportException) cause;
+					if (tt.getType() != TTransportException.END_OF_FILE)
+						throw e;
+				} else
+					throw e;
 			}
 			return result;
 		}
