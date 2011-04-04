@@ -1,12 +1,16 @@
 package com.rubicon.data.thrift;
 
+import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.mapreduce.RecordReader;
@@ -59,7 +63,8 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		if (keyClass != null)
 			cls = keyClass;
 		else {
-			cls = (Class<K>) ReflectionHelper.getClassFromConfiguration(conf, Constants.KEY_CLASS);
+			cls = (Class<K>) ReflectionHelper.getClassFromConfiguration(conf,
+					Constants.KEY_CLASS);
 			keyClass = cls;
 		}
 		return cls;
@@ -70,7 +75,8 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		if (valueClass != null)
 			cls = valueClass;
 		else {
-			cls = (Class<V>) ReflectionHelper.getClassFromConfiguration(conf, Constants.VALUE_CLASS);
+			cls = (Class<V>) ReflectionHelper.getClassFromConfiguration(conf,
+					Constants.VALUE_CLASS);
 			valueClass = cls;
 		}
 		return cls;
@@ -78,6 +84,8 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 
 	protected static class ThriftRecordReader<K extends TBase, V extends TBase>
 			extends RecordReader<K, V> {
+		private CompressionCodecFactory compressionCodecs = null;
+
 		private FileSplit split;
 
 		private Class<K> keyClass;
@@ -85,6 +93,8 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		private Class<V> valueClass;
 
 		private FSDataInputStream in;
+
+		private InputStream inputStream;
 
 		private ThriftCompactDeserializer<K> keyDeserializer;
 
@@ -114,13 +124,24 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		public void initialize(InputSplit genericSplit,
 				TaskAttemptContext context) throws IOException {
 			Path path = split.getPath();
+			compressionCodecs = new CompressionCodecFactory(context
+					.getConfiguration());
+			CompressionCodec codec = compressionCodecs.getCodec(path);
 			FileSystem fs = path.getFileSystem(context.getConfiguration());
+
 			this.in = fs.open(path);
+
+			if (codec != null) {
+				this.inputStream = codec.createInputStream(this.in);
+			} else {
+				this.inputStream = this.in;
+			}
+
 			start = split.getStart();
 			end = start + split.getLength();
 			pos = start;
-			this.keyDeserializer.open(in);
-			this.valueDeserializer.open(in);
+			this.keyDeserializer.open(this.inputStream);
+			this.valueDeserializer.open(this.inputStream);
 		}
 
 		public synchronized long getPos() throws IOException {
