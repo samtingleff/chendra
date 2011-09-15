@@ -22,3 +22,27 @@ To use, simply (1) generate thrift classes with the "hashcode" flag; (2) for use
 We include simple types for: boolean, byte, double, integer, long, short, string and several list and map formulations of these.
 
 The name comes from a seventeen-year-old Borneo elephant at the Oregon Zoo, the only Borneo elephant currently in the US. The Borneo elephant is thought by some to come from [Sulu](http://en.wikipedia.org/wiki/Sulu "Island of Sulu"), where it was imported form the island of [Java](http://en.wikipedia.org/wiki/Java "Island of Java"). They are a critically endangered species.
+
+# Maven #
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rubicon.core</groupId>
+            <artifactId>chendra</artifactId>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>samtingleff-maven-snapshot-repo</id>
+            <url>https://github.com/samtingleff/maven-repo/raw/master/snapshots</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
