@@ -15,3 +15,7 @@ struct TDoubleMap {
 struct TStringIntegerMap {
  1: map<string, i32> values
 }
+
+struct TIntegerLongMap {
+ 1: map<i32, i64> values
+}
