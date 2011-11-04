@@ -155,19 +155,19 @@ public class ThriftCompactInputFormat<K extends TBase, V extends TBase> extends
 		public boolean nextKeyValue() throws IOException, InterruptedException {
 			boolean result = false;
 			try {
-				if (this.inputStream.available() > 0) {
-					key = createKey();
-					value = createValue();
-					keyDeserializer.deserialize(key);
-					valueDeserializer.deserialize(value);
-					this.pos = this.in.getPos();
-					result = true;
-				}
+				key = createKey();
+				value = createValue();
+				keyDeserializer.deserialize(key);
+				valueDeserializer.deserialize(value);
+				this.pos = this.in.getPos();
+				result = true;
 			} catch (TTransportException e) {
 				if (e.getType() != TTransportException.END_OF_FILE) {
 					throw new IOException(e);
 				}
+				e.printStackTrace();
 			} catch (EOFException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
 				Throwable cause = e.getCause();
 				if ((cause != null) && (cause instanceof TTransportException)) {
