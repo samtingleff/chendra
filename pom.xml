@@ -7,6 +7,7 @@
     <packaging>jar</packaging>
     <version>1.0.7</version>
     <name>chendra</name>
+    <url>https://github.com/samtingleff/chendra</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
