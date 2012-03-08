@@ -15,9 +15,9 @@
     <description>Library to use apache thrift types with Hadoop</description>
     <url>https://github.com/samtingleff/chendra</url>
     <scm>
-        <connection>scm:git:git://github.com/samtingleff/chendra.git</connection>
-        <developerConnection>scm:git:git://github.com/samtingleff/chendra.git</developerConnection>
-        <url>https://github.com/samtingleff/chendra</url>
+        <connection>scm:git:git@github.com:samtingleff/chendra.git</connection>
+        <developerConnection>scm:git:git@github.com:samtingleff/chendra.git</developerConnection>
+        <url>git@github.com:samtingleff/chendra.git</url>
     </scm>
     <developers>
         <developer>
