@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -10,7 +9,7 @@
     <groupId>com.rubicon.oss</groupId>
     <artifactId>chendra</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.7</version>
     <name>chendra</name>
     <description>Library to use apache thrift types with Hadoop</description>
     <url>https://github.com/samtingleff/chendra</url>
@@ -105,40 +104,40 @@
                                  <phase>generate-sources</phase>
                                  <configuration>
                                      <tasks>
-                                         <mkdir dir="target/generated-sources"/>
+                                         <mkdir dir="target/generated-sources" />
                                          <exec executable="/usr/local/bin/thrift">
-                                             <arg value="--gen"/>
-                                             <arg value="java:beans,hashcode"/>
-                                             <arg value="-o"/>
-                                             <arg value="target/generated-sources"/>
-                                             <arg value="src/main/thrift/helper-types.thrift"/>
+                                             <arg value="--gen" />
+                                             <arg value="java:beans,hashcode" />
+                                             <arg value="-o" />
+                                             <arg value="target/generated-sources" />
+                                             <arg value="src/main/thrift/helper-types.thrift" />
                                          </exec>
                                          <exec executable="/usr/local/bin/thrift">
-                                             <arg value="--gen"/>
-                                             <arg value="java:beans,hashcode"/>
-                                             <arg value="-o"/>
-                                             <arg value="target/generated-sources"/>
-                                             <arg value="src/main/thrift/list-types.thrift"/>
+                                             <arg value="--gen" />
+                                             <arg value="java:beans,hashcode" />
+                                             <arg value="-o" />
+                                             <arg value="target/generated-sources" />
+                                             <arg value="src/main/thrift/list-types.thrift" />
                                          </exec>
                                          <exec executable="/usr/local/bin/thrift">
-                                             <arg value="--gen"/>
-                                             <arg value="java:beans,hashcode"/>
-                                             <arg value="-o"/>
-                                             <arg value="target/generated-sources"/>
-                                             <arg value="src/main/thrift/map-types.thrift"/>
+                                             <arg value="--gen" />
+                                             <arg value="java:beans,hashcode" />
+                                             <arg value="-o" />
+                                             <arg value="target/generated-sources" />
+                                             <arg value="src/main/thrift/map-types.thrift" />
                                          </exec>
                                          <exec executable="/usr/local/bin/thrift">
-                                             <arg value="--gen"/>
-                                             <arg value="java:beans,hashcode"/>
-                                             <arg value="-o"/>
-                                             <arg value="target/generated-sources"/>
-                                             <arg value="src/main/thrift/simple-types.thrift"/>
+                                             <arg value="--gen" />
+                                             <arg value="java:beans,hashcode" />
+                                             <arg value="-o" />
+                                             <arg value="target/generated-sources" />
+                                             <arg value="src/main/thrift/simple-types.thrift" />
                                          </exec>
                                          <delete>
-                                             <fileset dir="src/main/java/com/rubicon/data/thrift/types" includes="**/*"/>
+                                             <fileset dir="src/main/java/com/rubicon/data/thrift/types" includes="**/*" />
                                          </delete>
                                          <copy todir="src/main/java/com/rubicon/data/thrift/types">
-                                             <fileset dir="target/generated-sources/gen-javabean/com/rubicon/data/thrift/types"/>
+                                             <fileset dir="target/generated-sources/gen-javabean/com/rubicon/data/thrift/types" />
                                          </copy>
                                      </tasks>
                                  </configuration>
