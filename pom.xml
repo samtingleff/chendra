@@ -7,7 +7,23 @@
     <packaging>jar</packaging>
     <version>1.0.7</version>
     <name>chendra</name>
+    <description>Library to use apache thrift types with Hadoop</description>
     <url>https://github.com/samtingleff/chendra</url>
+    <scm>
+        <connection>scm:git:git://github.com/samtingleff/chendra.git</connection>
+        <developerConnection>scm:git:git://github.com/samtingleff/chendra.git</developerConnection>
+        <url>https://github.com/samtingleff/chendra</url>
+    </scm>
+    <developers>
+        <developer>
+            <id>samtingleff</id>
+            <name>Sam</name>
+            <email>sam@tingleff.com</email>
+            <url>http://sam.tingleff.com/</url>
+            <organization>the Rubicon Project</organization>
+            <organizationUrl>http://www.rubiconproject.com/</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
