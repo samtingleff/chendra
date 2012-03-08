@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.rubicon.oss</groupId>
+    <artifactId>chendra</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.7</version>
+    <name>chendra</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- set the version of javac -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- version provided in the super pom -->
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <compilerArgument>-Xlint:-deprecation</compilerArgument>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>profile-thrift-builder</id>
+            <activation>
+                <file>
+                    <exists>/usr/local/bin/thrift</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                 <id>generate-sources</id>
+                                 <phase>generate-sources</phase>
+                                 <configuration>
+                                     <tasks>
+                                         <mkdir dir="target/generated-sources"/>
+                                         <exec executable="/usr/local/bin/thrift">
+                                             <arg value="--gen"/>
+                                             <arg value="java:beans,hashcode"/>
+                                             <arg value="-o"/>
+                                             <arg value="target/generated-sources"/>
+                                             <arg value="src/main/thrift/helper-types.thrift"/>
+                                         </exec>
+                                         <exec executable="/usr/local/bin/thrift">
+                                             <arg value="--gen"/>
+                                             <arg value="java:beans,hashcode"/>
+                                             <arg value="-o"/>
+                                             <arg value="target/generated-sources"/>
+                                             <arg value="src/main/thrift/list-types.thrift"/>
+                                         </exec>
+                                         <exec executable="/usr/local/bin/thrift">
+                                             <arg value="--gen"/>
+                                             <arg value="java:beans,hashcode"/>
+                                             <arg value="-o"/>
+                                             <arg value="target/generated-sources"/>
+                                             <arg value="src/main/thrift/map-types.thrift"/>
+                                         </exec>
+                                         <exec executable="/usr/local/bin/thrift">
+                                             <arg value="--gen"/>
+                                             <arg value="java:beans,hashcode"/>
+                                             <arg value="-o"/>
+                                             <arg value="target/generated-sources"/>
+                                             <arg value="src/main/thrift/simple-types.thrift"/>
+                                         </exec>
+                                         <delete>
+                                             <fileset dir="src/main/java/com/rubicon/data/thrift/types" includes="**/*"/>
+                                         </delete>
+                                         <copy todir="src/main/java/com/rubicon/data/thrift/types">
+                                             <fileset dir="target/generated-sources/gen-javabean/com/rubicon/data/thrift/types"/>
+                                         </copy>
+                                     </tasks>
+                                 </configuration>
+                                 <goals>
+                                     <goal>run</goal>
+                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+            <version>0.20.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <pluginRepositories>
+        <!-- for fetching the incremental build plugin -->
+        <pluginRepository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
