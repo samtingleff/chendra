@@ -9,7 +9,7 @@
     <groupId>com.rubiconproject.oss</groupId>
     <artifactId>chendra</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8</version>
     <name>chendra</name>
     <description>Library to use apache thrift types with Hadoop</description>
     <url>https://github.com/samtingleff/chendra</url>
@@ -110,7 +110,7 @@
         								</goals>
         							</pluginExecutionFilter>
         							<action>
-        								<ignore></ignore>
+        								<ignore />
         							</action>
         						</pluginExecution>
         					</pluginExecutions>
