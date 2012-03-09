@@ -9,7 +9,7 @@
     <groupId>com.rubiconproject.oss</groupId>
     <artifactId>chendra</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.8</version>
+    <version>1.0.9-SNAPSHOT</version>
     <name>chendra</name>
     <description>Library to use apache thrift types with Hadoop</description>
     <url>https://github.com/samtingleff/chendra</url>
