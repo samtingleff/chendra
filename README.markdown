@@ -29,20 +29,6 @@ The name comes from a seventeen-year-old Borneo elephant at the Oregon Zoo, the 
         <dependency>
             <groupId>com.rubiconproject.oss</groupId>
             <artifactId>chendra</artifactId>
+            <version>1.0.8</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>samtingleff-maven-snapshot-repo</id>
-            <url>https://github.com/samtingleff/maven-repo/raw/master/snapshots</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
