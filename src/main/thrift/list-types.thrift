@@ -1,4 +1,4 @@
-namespace java com.rubicon.data.thrift.types
+namespace java com.rubiconproject.data.thrift.types
 
 struct TBooleanList {
  1: list<bool> values

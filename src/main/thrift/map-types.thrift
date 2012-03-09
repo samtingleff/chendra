@@ -1,4 +1,4 @@
-namespace java com.rubicon.data.thrift.types
+namespace java com.rubiconproject.data.thrift.types
 
 struct TStringMap {
  1: map<string, string> values

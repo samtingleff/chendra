@@ -6,7 +6,7 @@
         <version>7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rubicon.oss</groupId>
+    <groupId>com.rubiconproject.oss</groupId>
     <artifactId>chendra</artifactId>
     <packaging>jar</packaging>
     <version>1.0.8-SNAPSHOT</version>
@@ -169,10 +169,10 @@
                                              <arg value="src/main/thrift/simple-types.thrift" />
                                          </exec>
                                          <delete>
-                                             <fileset dir="src/main/java/com/rubicon/data/thrift/types" includes="**/*" />
+                                             <fileset dir="src/main/java/com/rubiconproject/data/thrift/types" includes="**/*" />
                                          </delete>
-                                         <copy todir="src/main/java/com/rubicon/data/thrift/types">
-                                             <fileset dir="target/generated-sources/gen-javabean/com/rubicon/data/thrift/types" />
+                                         <copy todir="src/main/java/com/rubiconproject/data/thrift/types">
+                                             <fileset dir="target/generated-sources/gen-javabean/com/rubiconproject/data/thrift/types" />
                                          </copy>
                                      </tasks>
                                  </configuration>
