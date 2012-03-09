@@ -27,7 +27,7 @@ The name comes from a seventeen-year-old Borneo elephant at the Oregon Zoo, the 
 
     <dependencies>
         <dependency>
-            <groupId>com.rubicon.oss</groupId>
+            <groupId>com.rubiconproject.oss</groupId>
             <artifactId>chendra</artifactId>
         </dependency>
     </dependencies>
